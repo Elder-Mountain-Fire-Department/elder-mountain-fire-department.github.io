@@ -1,0 +1,22 @@
+---
+layout: base.njk
+title: Photo gallery
+description: Photos of Elder Mountain Volunteer Fire Department training, apparatus, and calls.
+permalink: /photo-gallery/
+---
+<article class="wrap">
+  <header class="doc-head">
+    <h1>Photo gallery</h1>
+    <p class="lede">Training, apparatus, and calls.</p>
+  </header>
+  <ul class="gallery">
+  {%- for p in gallery %}
+    <li id="{{ p.file | replace('.jpg', '') }}">
+      <figure>
+        <img src="/img/photos/{{ p.file }}" alt="{{ p.alt }}" sizes="(min-width: 900px) 33vw, (min-width: 560px) 50vw, 100vw">
+        <figcaption>{{ p.caption }}</figcaption>
+      </figure>
+    </li>
+  {%- endfor %}
+  </ul>
+</article>

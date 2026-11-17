@@ -1,0 +1,58 @@
+---
+layout: base.njk
+title: Home
+bodyClass: home
+---
+<section class="hero">
+  <div class="hero-text">
+    <p class="kicker">All-volunteer fire and rescue</p>
+    <h1>Saving lives and property on Elder Mountain</h1>
+    <p class="lede">We are a 501(c)(3) nonprofit fire department staffed entirely by volunteers from the community, with mutual aid to our neighboring departments.</p>
+    <p class="actions"><a class="button" href="/join-us/">Volunteer with us</a> <a class="button ghost" href="/about/">About the department</a></p>
+  </div>
+  <figure class="hero-photo">
+    <img src="/img/photos/engine-1-station.jpg" alt="Engine 1 parked outside the Elder Mountain fire station" loading="eager" fetchpriority="high" sizes="(min-width: 900px) 55vw, 100vw">
+  </figure>
+</section>
+
+<section class="wrap split">
+  <figure class="split-photo">
+    <img src="/img/photos/engine-1-pump-panel.jpg" alt="Side of the engine showing the Elder Mountain Fire Rescue shield and the pump panel" sizes="(min-width: 900px) 45vw, 100vw">
+  </figure>
+  <div>
+    <h2>Rapid, all-hazard response</h2>
+    <p>We respond to the residents of Elder Mountain, and we back up our neighboring departments through mutual aid agreements.</p>
+    <ul class="ticks">
+      <li>Structural, vehicle, and wildland fires</li>
+      <li>Rescues and vehicle accidents</li>
+      <li>Medical emergencies</li>
+      <li>Other hazards</li>
+    </ul>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split reverse">
+    <figure class="split-photo">
+      <img src="/img/photos/lz-training-group.jpg" alt="Volunteers standing in front of a LifeForce medical helicopter in a field" sizes="(min-width: 900px) 45vw, 100vw">
+    </figure>
+    <div>
+      <h2>Run by your neighbors</h2>
+      <p>About 20 volunteers serve as firefighters, emergency medical technicians, medical first responders, and support staff. Every one of them is trained or in training.</p>
+      <p>We are always accepting applications for firefighters and support members.</p>
+      <p><a class="button light" href="/join-us/">Apply to volunteer</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap recent">
+  <div class="section-head">
+    <h2>Training and calls</h2>
+    <a href="/photo-gallery/">All photos</a>
+  </div>
+  <ul class="photo-row">
+  {%- for p in gallery %}{% if p.home %}
+    <li><a href="/photo-gallery/#{{ p.file | replace('.jpg', '') }}"><img src="/img/photos/{{ p.file }}" alt="{{ p.alt }}" sizes="(min-width: 900px) 25vw, 50vw"></a></li>
+  {%- endif %}{% endfor %}
+  </ul>
+</section>

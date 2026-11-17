@@ -1,0 +1,11 @@
+{
+  "name": "Elder Mountain Volunteer Fire Department",
+  "short": "EMVFD",
+  "tagline": "Volunteering to save lives and property on Elder Mountain, Tennessee",
+  "url": "https://eldervfd.org",
+  "email": "info@eldervfd.org",
+  "facebook": "https://www.facebook.com/emvfr",
+  "station": { "street": "930 Cumberland Road", "city": "Chattanooga, TN 37419" },
+  "mailing": { "street": "1098 Cumberland Road", "city": "Chattanooga, TN 37419" },
+  "formKey": ""
+}

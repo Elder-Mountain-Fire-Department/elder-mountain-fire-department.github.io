@@ -1,0 +1,61 @@
+[
+  {
+    "file": "engine-1-station.jpg",
+    "caption": "New Engine 1",
+    "alt": "Engine 1 parked outside the Elder Mountain fire station"
+  },
+  {
+    "file": "lz-training-group.jpg",
+    "caption": "Landing zone (LZ) training",
+    "alt": "Volunteers standing in front of a LifeForce medical helicopter in a field"
+  },
+  {
+    "file": "lz-training-briefing.jpg",
+    "caption": "LZ training briefing",
+    "alt": "Volunteers gathered in a field during a landing zone briefing"
+  },
+  {
+    "file": "deck-gun.jpg",
+    "caption": "Deck gun",
+    "alt": "A firefighter operating the deck gun on top of the engine",
+    "home": true
+  },
+  {
+    "file": "engine-1-pump-panel.jpg",
+    "caption": "Engine 1 pump panel",
+    "alt": "Side of the engine showing the Elder Mountain Fire Rescue shield and the pump panel"
+  },
+  {
+    "file": "wildland-fire-night.jpg",
+    "caption": "Wildland fire response",
+    "alt": "Firefighters working at night in a wooded area lit by emergency lights",
+    "home": true
+  },
+  {
+    "file": "wildland-fire-engine-night.jpg",
+    "caption": "Wildland fire response",
+    "alt": "Fire engine with lights on beside a fence at night"
+  },
+  {
+    "file": "wildland-training.jpg",
+    "caption": "Wildland fire training",
+    "alt": "Firefighters in yellow wildland gear cutting a fallen log in the woods",
+    "home": true
+  },
+  {
+    "file": "hydrant-training-1.jpg",
+    "caption": "Hydrant safety",
+    "alt": "Two volunteers connecting a hose to a yellow hydrant"
+  },
+  {
+    "file": "hydrant-training-2.jpg",
+    "caption": "Hydrant testing",
+    "alt": "Volunteers opening a hydrant during hose testing",
+    "home": true
+  },
+  {
+    "file": "tools-equipment.jpg",
+    "caption": "Tools and equipment",
+    "alt": "Volunteers reviewing tools laid out beside the engine"
+  }
+]

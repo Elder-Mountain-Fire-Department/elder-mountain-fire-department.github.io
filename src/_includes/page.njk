@@ -1,0 +1,15 @@
+---
+layout: base.njk
+---
+<article class="wrap doc">
+  <header class="doc-head">
+    <h1>{{ title }}</h1>
+    {%- if lede %}<p class="lede">{{ lede }}</p>{% endif %}
+  </header>
+  {%- if image %}
+  <figure class="doc-photo"><img src="/img/photos/{{ image }}" alt="{{ imageAlt }}" sizes="(min-width: 900px) 860px, 100vw"></figure>
+  {%- endif %}
+  <div class="doc-body">
+{{ content | safe }}
+  </div>
+</article>

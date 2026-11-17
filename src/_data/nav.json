@@ -1,0 +1,6 @@
+[
+  { "label": "About", "url": "/about/" },
+  { "label": "Photos", "url": "/photo-gallery/" },
+  { "label": "Join us", "url": "/join-us/" },
+  { "label": "Contact", "url": "/contact/" }
+]

@@ -1,0 +1,46 @@
+{#- Contact form. Needs site.formKey (a Web3Forms access key registered to info@eldervfd.org). Without one, it shows an email link instead. -#}
+{%- if site.formKey %}
+<form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="{{ site.formKey }}">
+  <input type="hidden" name="subject" value="{{ formSubject }}">
+  <input type="hidden" name="from_name" value="eldervfd.org">
+  <input type="hidden" name="redirect" value="{{ site.url }}/thanks/">
+  <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <label for="f-name">Name</label>
+  <input id="f-name" name="name" type="text" autocomplete="name" required>
+  <label for="f-email">Email</label>
+  <input id="f-email" name="email" type="email" autocomplete="email" required>
+  <label for="f-phone">Phone <span class="opt">(optional)</span></label>
+  <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+  <label for="f-message">{{ formPrompt or "Message" }}</label>
+  <textarea id="f-message" name="message" rows="6" required></textarea>
+  <button class="button" type="submit">{{ formButton or "Send" }}</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+<script>
+(function () {
+  var f = document.querySelector(".contact-form"), s = f.querySelector(".form-status"), b = f.querySelector("button");
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    b.disabled = true;
+    s.className = "form-status";
+    s.textContent = "Sending…";
+    fetch(f.action, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(f) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.success) throw new Error(d.message);
+        f.reset();
+        s.classList.add("ok");
+        s.textContent = "Thank you. We will get back to you as soon as we can.";
+      })
+      .catch(function () {
+        s.classList.add("err");
+        s.innerHTML = "That did not go through. Please email <a href=\"mailto:{{ site.email }}\">{{ site.email }}</a> instead.";
+      })
+      .finally(function () { b.disabled = false; });
+  });
+})();
+</script>
+{%- else %}
+<p><a class="button" href="mailto:{{ site.email }}?subject={{ formSubject | urlencode }}">Email {{ site.email }}</a></p>
+{%- endif %}
