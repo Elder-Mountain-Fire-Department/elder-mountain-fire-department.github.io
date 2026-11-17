@@ -7,8 +7,8 @@
   var FEMS = "https://fems.fs2c.usda.gov/api/climatology/graphql/";
   var RAWS_ID = "409201"; // Prentice Cooper State Forest RAWS, 5 miles from the station
   var BAN = "https://services.arcgis.com/lvPBAGXeSupVUvx2/arcgis/rest/services/Burn_Ban_WFL1/FeatureServer/0/query" +
-    "?where=NAME%20IN%20(%27Hamilton%27,%27Marion%27)&outFields=NAME,Ban_Status&returnGeometry=false&f=json";
-  var NWS_ZONES = "TNZ098,TNZ099"; // Marion, Hamilton (forecast and fire weather zones)
+    "?where=NAME%3D%27Marion%27&outFields=NAME,Ban_Status&returnGeometry=false&f=json";
+  var NWS_ZONES = "TNZ098"; // Marion County forecast and fire weather zone
   var POINT = "35.063,-85.372";
   var APCB = "https://apcb.org/wp-json/wp/v2/pages/156?_fields=content";
   var STOP_EVENTS = ["Red Flag Warning", "Fire Weather Watch", "Wind Advisory", "High Wind Warning", "Extreme Fire Danger"];
@@ -142,7 +142,7 @@
           detail: small ? small.innerHTML.split(/<br\s*\/?>/i).map(function (s) { return s.replace(/<[^>]+>/g, "").trim(); }).filter(Boolean) : []
         };
       });
-      if (!out["Burning Allowed?"]) throw new Error("no burn status");
+      if (!out["Air Quality"]) throw new Error("no air quality");
       return out;
     });
   }
@@ -217,9 +217,9 @@
     if (bans.ok) {
       var active = Object.keys(bans.value).filter(function (k) { return /active/i.test(bans.value[k]); });
       $("s-ban").innerHTML = active.length
-        ? "<strong class=\"bad\">Burn ban in effect for " + esc(active.join(" and ")) + " County.</strong> No open burning of any kind, including campfires and grills."
-        : "No burn ban for Marion or Hamilton County.";
-      active.forEach(function (c) { stop.push("State burn ban in " + c + " County"); });
+        ? "<strong class=\"bad\">Burn ban in effect for Marion County.</strong> No outdoor fires of any kind, including campfires, grills, and burn barrels."
+        : "No burn ban for Marion County.";
+      if (active.length) stop.push("Burn ban for Marion County");
     } else {
       $("s-ban").innerHTML = "Could not check. See <a href=\"https://www.tn.gov/tnwildlandfire/prevention/safe-debris-burning/burn-bans.html\">burn bans</a>.";
     }
@@ -231,29 +231,16 @@
             var bad = STOP_EVENTS.indexOf(p.event) >= 0;
             return (bad ? "<strong class=\"bad\">" : "<strong>") + esc(p.event) + "</strong>" + (p.ends || p.expires ? " until " + esc(new Date(p.ends || p.expires).toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit", timeZone: TZ })) : "");
           }).join("<br>")
-        : "No fire weather alerts for Marion or Hamilton County.";
+        : "No fire weather alerts for Marion County.";
       stops.forEach(function (p) { stop.push(p.event + " in effect"); });
     } else {
       $("s-nws").innerHTML = "Could not check. See <a href=\"https://www.weather.gov/mrx/\">NWS Morristown</a>.";
     }
     if (ap.ok) {
-      var b = ap.value["Burning Allowed?"], yes = /^yes/i.test(b.value);
-      var dateStr = "", hours = "", notes = [];
-      b.detail.forEach(function (t) {
-        if (/\b(19|20)\d\d\b/.test(t) && !/AM|PM/.test(t)) dateStr = t;
-        else if (/\d\s*(AM|PM)/i.test(t)) hours = t.replace(/\s*-\s*/, "–");
-        else notes.push(/[.!]$/.test(t) ? t : t + ".");
-      });
-      var todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: TZ });
-      var when = dateStr && dateStr !== todayStr ? "on " + dateStr : "today";
-      $("s-apcb").innerHTML = (yes ? "<strong class=\"good\">Burning allowed</strong> " + esc(when) + (hours ? ", " + esc(hours) : "") + "."
-                                   : "<strong class=\"bad\">No burning</strong> " + esc(when) + ".") +
-        (notes.length ? " " + esc(notes.join(" ")) : "") + " <span class=\"small\">Hamilton County side.</span>";
       var aqi = ap.value["Air Quality Index Forecast"], aq = ap.value["Air Quality"], pol = ap.value["Highest Pollutant"];
-      $("s-aq").innerHTML = aq ? "<strong>" + esc(aq.value) + "</strong>" + (aqi ? ", AQI " + esc(aqi.value) : "") + (pol ? " (" + esc(pol.value.toLowerCase()) + ")" : "") : "Not available.";
+      $("s-aq").innerHTML = aq ? "<strong>" + esc(aq.value) + "</strong>" + (aqi ? ", AQI " + esc(aqi.value) : "") + (pol ? " (" + esc(pol.value.toLowerCase()) + ")" : "") + " <span class=\"small\">Chattanooga area forecast.</span>" : "Not available.";
       if (aq && !/good|moderate/i.test(aq.value)) caution.push("Air quality is " + aq.value.toLowerCase() + ", so smoke will add to it");
     } else {
-      $("s-apcb").innerHTML = "Could not check. See <a href=\"https://apcb.org/\">apcb.org</a> or text <em>burn</em> to 423-643-5971.";
       $("s-aq").innerHTML = "Could not check. See the <a href=\"https://apcb.org/daily-report/\">daily air quality report</a>.";
     }
 
@@ -265,7 +252,7 @@
     else { level = "ok"; word = "Good conditions for burning"; }
     var why = stop.concat(caution);
     if (!al.ok && level !== "stop") why.push("Could not reach the National Weather Service. Check for a Red Flag Warning before you burn");
-    if (level === "ok") why.push("Get the permit for your side of the mountain first");
+    if (level === "ok") why.push("Get your Forestry burn permit first");
     $("verdict").setAttribute("data-level", level);
     $("verdict-word").textContent = word;
     $("verdict-why").innerHTML = why.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("");
@@ -276,7 +263,6 @@
     var now = new Date(), m = +now.toLocaleString("en-US", { month: "numeric", timeZone: TZ }), d = +now.toLocaleString("en-US", { day: "numeric", timeZone: TZ });
     var md = m * 100 + d;
     $("tdf-season").textContent = (md >= 1015 || md <= 515) ? "Permit season: a Forestry permit is required today." : "Outside permit season (May 16 to October 14): no Forestry permit is needed, but every other rule still applies.";
-    $("apcb-season").textContent = (md >= 1001 || md <= 430) ? "Burn season: allowed with a bureau permit on days the bureau says yes." : "Seasonal ban: no open burning in Hamilton County until October 1.";
   }
 
   function settle(p) { return p.then(function (v) { return { ok: true, value: v }; }, function (e) { return { ok: false, error: e }; }); }

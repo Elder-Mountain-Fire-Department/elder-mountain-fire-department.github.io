@@ -56,9 +56,9 @@ Needs Node 22. `npm install`, then `npm run dev` for a live preview at http://lo
 - `/burning/` is built entirely in the browser by `src/js/burn.js`, from public sources that allow it, every 5 minutes:
   Elder East weather station (FST Dynamics mesonet) for wind gust and humidity; the Prentice Cooper State Forest RAWS
   (USDA Forest Service FEMS, station 409201, fuel model Y) for 10-hour fuel moisture and KBDI; the Tennessee Department of
-  Agriculture burn-ban map layer; National Weather Service alerts and forecast for zones TNZ098 (Marion) and TNZ099 (Hamilton);
-  and the Air Pollution Control Bureau's "Burning allowed?" and air quality widget (apcb.org page 156 through its WordPress
-  API). The index is the BAFDRS points score (each factor 1-6, total 3-18). If a source stops working, its line says
+  Agriculture burn-ban map layer for Marion County; National Weather Service alerts and forecast for zone TNZ098 (Marion);
+  and the Chattanooga-Hamilton County Air Pollution Control Bureau's air quality forecast (apcb.org page 156 through its
+  WordPress API). Permit information is for Marion County (Tennessee Division of Forestry), where the station is. The index is the BAFDRS points score (each factor 1-6, total 3-18). If a source stops working, its line says
   "Could not check" and the rest of the page still works. The APCB and burn-ban sources are not official APIs, so check them
   if something looks wrong.
 - `wordpress-archive/` holds the text of the old WordPress site. It is not published.

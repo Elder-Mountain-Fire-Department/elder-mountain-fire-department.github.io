@@ -178,11 +178,12 @@ p, ul { margin: 0 0 1em; }
 .status-list dd { margin: 0; }
 .good { color: #2e7d32; } .bad { color: var(--red); }
 .juris-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); margin-top: 24px; }
-.juris { background: var(--mist); border-radius: 6px; padding: clamp(20px, 3vw, 32px); }
+.juris, .permit { background: var(--mist); border-radius: 6px; padding: clamp(20px, 3vw, 32px); }
+.permit { max-width: 52rem; }
 .juris h3 { font-size: 1.4rem; margin-bottom: 0.3em; }
 .juris-season { font-weight: 600; }
-.juris ul { padding-left: 1.1em; }
-.juris li { margin-bottom: 0.6em; }
+.juris ul, .permit ul { padding-left: 1.1em; }
+.juris li, .permit li { margin-bottom: 0.6em; }
 .checklist { max-width: 46rem; padding-left: 1.2em; }
 .checklist li { margin-bottom: 0.5em; }
 .how p { max-width: 46rem; }

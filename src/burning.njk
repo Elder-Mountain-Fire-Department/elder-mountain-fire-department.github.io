@@ -1,13 +1,13 @@
 ---
 layout: base.njk
 title: Burn conditions
-description: Is it safe to burn brush on Elder Mountain today? Live conditions from our weather station, Tennessee Division of Forestry, the National Weather Service, and the Hamilton County air bureau, plus the permit rules for each side of the mountain.
+description: Is it safe to burn brush on Elder Mountain today? Live conditions from our weather station, the Tennessee Division of Forestry, and the National Weather Service, plus Marion County burn permit rules.
 permalink: /burning/
 ---
 <article class="burn">
   <header class="burn-head">
     <h1>Can I burn today?</h1>
-    <p class="lede">Live conditions on Elder Mountain, with the official burn status for both sides of the mountain. This page updates itself every five minutes.</p>
+    <p class="lede">Live conditions on Elder Mountain and today's official burn status for Marion County. This page updates itself every five minutes.</p>
   </header>
 
   <section class="verdict" id="verdict" data-level="loading" aria-live="polite">
@@ -50,47 +50,30 @@ permalink: /burning/
     <dl class="status-list">
       <div><dt>State burn ban</dt><dd id="s-ban">Checking…</dd></div>
       <div><dt>National Weather Service</dt><dd id="s-nws">Checking…</dd></div>
-      <div><dt>Hamilton County air bureau</dt><dd id="s-apcb">Checking…</dd></div>
       <div><dt>Air quality forecast</dt><dd id="s-aq">Checking…</dd></div>
-      <div><dt>Tennessee Division of Forestry</dt><dd id="s-tdf">Forestry stops issuing permits when fire danger is high. The <a href="https://tn.firesponse.com/burn-permit/public-restrictions/">permit site</a> tells you if you can get one today.</dd></div>
+      <div><dt>Burn permits</dt><dd id="s-tdf">Forestry stops issuing permits when fire danger is high. The <a href="https://tn.firesponse.com/burn-permit/public-restrictions/">permit site</a> tells you if you can get one today.</dd></div>
     </dl>
   </section>
 
   <section class="burn-section">
-    <h2>Which rules apply to you</h2>
-    <p class="section-lede">Elder Mountain sits on the line between Marion and Hamilton counties, and each side has different rules. The fire station on Cumberland Road is on the Marion County side. Much of the Hamilton County side is inside Chattanooga city limits. If you are not sure which side you are on, check your property tax bill or <a href="mailto:{{ site.email }}">ask us</a>.</p>
-    <div class="juris-grid">
-      <div class="juris">
-        <h3>Marion County side</h3>
-        <p class="juris-season" id="tdf-season"></p>
-        <ul>
-          <li><strong>Permit:</strong> a free burn permit from the Tennessee Division of Forestry from October 15 to May 15, for any leaf, brush, or debris pile within 500 feet of woods or grass. That covers nearly everywhere on the mountain.</li>
-          <li><strong>How to get one:</strong> <a href="https://tn.firesponse.com/burn-permit/public-restrictions/">online</a>, in the MyTN app, or by phone at <a href="tel:+18773502876">877-350-BURN (2876)</a>, Monday to Friday, 8:00 AM to 4:30 PM Central.</li>
-          <li><strong>Good for:</strong> the day it is issued. The fire must be completely out by midnight.</li>
-          <li><strong>You may burn:</strong> leaves, brush, limbs, and untreated wood grown on your property. Never household trash, paper, cardboard, plastic, tires, shingles, or building debris.</li>
-          <li><strong>No permit needed:</strong> a campfire, a grill, or a burn barrel with a cover of half-inch mesh screen, unless a burn ban is in effect.</li>
-        </ul>
-        <p class="small">Sources: <a href="https://www.tn.gov/tnwildlandfire/prevention/safe-debris-burning/permits.html">Tennessee Division of Forestry</a>, <a href="https://www.tn.gov/environment/air/open-burning.html">TDEC open burning rules</a>.</p>
-      </div>
-      <div class="juris">
-        <h3>Hamilton County side</h3>
-        <p class="juris-season" id="apcb-season"></p>
-        <ul>
-          <li><strong>Permit:</strong> a seasonal burn permit from the Chattanooga-Hamilton County Air Pollution Control Bureau. It is $75 inside Chattanooga city limits (with an inspection, allow up to 7 business days) and $15 in unincorporated Hamilton County.</li>
-          <li><strong>Season:</strong> October 1 to April 30. All open burning, including burn barrels, is banned in Hamilton County from May 1 to September 30.</li>
-          <li><strong>Every burn day:</strong> check that the bureau says burning is allowed today (shown above, or text <em>burn</em> to <a href="sms:+14236435971">423-643-5971</a>), burn only during the posted hours, and call your local fire department before you light.</li>
-          <li><strong>You may burn:</strong> vegetation and clean, untreated wood no more than 12 inches across, from the permit address only. Keep the pile to 8 by 8 by 8 feet. No stumps, paper, cardboard, treated wood, or trash.</li>
-          <li><strong>No permit needed:</strong> a recreational fire of clean, seasoned firewood no bigger than 3 feet wide and 2 feet high.</li>
-        </ul>
-        <p class="small">Source: <a href="https://apcb.org/burning-permits/">Air Pollution Control Bureau</a>, 423-643-5970.</p>
-      </div>
+    <h2>Burn permits in Marion County</h2>
+    <div class="permit">
+      <p class="juris-season" id="tdf-season"></p>
+      <ul>
+        <li><strong>When you need one:</strong> October 15 to May 15, a free burn permit from the Tennessee Division of Forestry for any leaf, brush, or debris pile within 500 feet of woods or grass. That covers nearly everywhere on the mountain.</li>
+        <li><strong>How to get one:</strong> <a href="https://tn.firesponse.com/burn-permit/public-restrictions/">online</a>, in the MyTN app, or by phone at <a href="tel:+18773502876">877-350-BURN (2876)</a>, Monday to Friday, 8:00 AM to 4:30 PM Central.</li>
+        <li><strong>Good for:</strong> the day it is issued. The fire must be completely out by midnight. Forestry does not issue permits on days when fire danger is high.</li>
+        <li><strong>You may burn:</strong> leaves, brush, limbs, and untreated wood grown on your property. Never household trash, paper, cardboard, plastic, tires, shingles, or building debris.</li>
+        <li><strong>No permit needed:</strong> a campfire, a grill, or a burn barrel with a cover of half-inch mesh screen, unless a burn ban is in effect. A burn ban stops all outdoor fires.</li>
+      </ul>
+      <p class="small">Sources: <a href="https://www.tn.gov/tnwildlandfire/prevention/safe-debris-burning/permits.html">Tennessee Division of Forestry</a>, <a href="https://www.tn.gov/environment/air/open-burning.html">TDEC open burning rules</a>, <a href="https://www.tn.gov/tnwildlandfire/prevention/safe-debris-burning/burn-bans.html">burn bans and restrictions</a>.</p>
     </div>
   </section>
 
   <section class="burn-section">
     <h2>Before you light</h2>
     <ul class="checklist">
-      <li>Get the permit for your side of the mountain, and check this page and the official status the same day.</li>
+      <li>Get your Forestry burn permit, and check this page and the official status the same day.</li>
       <li>Do not burn when it is windy, when the humidity is low, or when gusts are forecast. Put the fire out if the wind picks up.</li>
       <li>Clear a firebreak to bare dirt around the pile: at least 3 feet through leaves or short grass, 5 feet through tall grass or brush.</li>
       <li>Keep piles small and add to them a little at a time. Stay clear of overhanging limbs and power lines.</li>
@@ -115,8 +98,8 @@ permalink: /burning/
         <tr><td>6</td><td>over 25 mph</td><td>under 10%</td><td>under 8%</td></tr>
       </tbody>
     </table>
-    <p>3–5 is very low, 6–8 low, 9–11 moderate, 12–15 high, and 16–18 very high. We say <strong>do not burn</strong> at high or above, or whenever there is a state burn ban, a Red Flag Warning, a Fire Weather Watch, a Wind Advisory, gusts of 20 mph or more, or humidity under 25%. Ten-hour fuel moisture is the moisture in sticks about the thickness of a finger, the fuel that carries a fire across the ground.</p>
-    <p class="small">This page is guidance from the Elder Mountain Fire Department. It is not a permit and does not replace the official status from the Tennessee Division of Forestry or the Air Pollution Control Bureau. Data: <a href="https://mesonet.fstdynamics.com/">FST Dynamics mesonet</a>, <a href="https://fems.fs2c.usda.gov/">USDA Forest Service FEMS</a>, <a href="https://www.weather.gov/mrx/">National Weather Service Morristown</a>, <a href="https://apcb.org/">Air Pollution Control Bureau</a>, Tennessee Department of Agriculture.</p>
+    <p>3–5 is very low, 6–8 low, 9–11 moderate, 12–15 high, and 16–18 very high. We say <strong>do not burn</strong> at high or above, or whenever there is a burn ban for Marion County, a Red Flag Warning, a Fire Weather Watch, a Wind Advisory, gusts of 20 mph or more, or humidity under 25%. Ten-hour fuel moisture is the moisture in sticks about the thickness of a finger, the fuel that carries a fire across the ground.</p>
+    <p class="small">This page is guidance from the Elder Mountain Fire Department. It is not a permit and does not replace the official status from the Tennessee Division of Forestry. Data: <a href="https://mesonet.fstdynamics.com/">FST Dynamics mesonet</a>, <a href="https://fems.fs2c.usda.gov/">USDA Forest Service FEMS</a>, <a href="https://www.weather.gov/mrx/">National Weather Service Morristown</a>, <a href="https://apcb.org/">Chattanooga-Hamilton County Air Pollution Control Bureau</a> (air quality), Tennessee Department of Agriculture.</p>
   </section>
 </article>
 <script src="/js/burn.js?v={{ build.v }}" defer></script>
