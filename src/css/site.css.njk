@@ -52,6 +52,25 @@ p, ul { margin: 0 0 1em; }
 .site-nav a { text-decoration: none; font-weight: 500; font-size: 1rem; padding: 6px 0; }
 .site-nav a:hover, .site-nav a[aria-current] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.45em; }
 
+/* Phones: the menu folds behind a button so the pinned header stays one line */
+.nav-toggle { display: none; font: 600 1rem/1 var(--font); color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 4px; padding: 10px 14px; cursor: pointer; }
+@media (max-width: 760px) {
+  .head-row { flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; row-gap: 0; }
+  .brand img { width: 42px; height: 42px; }
+  .brand-name { font-size: 1rem; }
+  .brand-name span { font-size: 0.85rem; }
+  .js .nav-toggle { display: block; }
+  .js .site-nav { display: none; width: 100%; }
+  .js .site-head.open .site-nav { display: block; }
+  .site-nav ul { flex-direction: column; gap: 0; padding: 6px 0 4px; }
+  .site-nav a { display: block; padding: 13px 0; font-size: 1.1rem; border-top: 1px solid var(--rule); }
+  .site-nav li:first-child a { border-top: 0; }
+  .site-head.over.open { background: rgba(255, 255, 255, 0.98); color: var(--ink); }
+  .site-head.over .site-nav a { border-top-color: rgba(255, 255, 255, 0.25); }
+  .site-head.over.open .site-nav a, .site-head.over.solid .site-nav a { border-top-color: var(--rule); }
+  .site-nav a:hover, .site-nav a[aria-current] { text-decoration: none; font-weight: 700; }
+}
+
 /* Buttons and links */
 .button { display: inline-block; background: var(--red); color: #fff; font: 600 1rem/1 var(--font); text-decoration: none; padding: 16px 28px; border: 2px solid var(--red); border-radius: 4px; cursor: pointer; }
 .button:hover { background: var(--red-dark); border-color: var(--red-dark); }
@@ -216,10 +235,14 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
   .mosaic li:last-child { grid-column: span 2; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 600px) {
+  .masonry { columns: 2; column-gap: 10px; }
+  .masonry li { margin-bottom: 16px; }
+  .masonry figcaption { font-size: 0.85rem; line-height: 1.35; margin-top: 5px; }
+}
 @media (max-width: 560px) {
+  html { scroll-padding-top: 72px; }
   body { font-size: 1.0625rem; }
-  .brand img { width: 44px; height: 44px; }
-  .site-nav ul { gap: 2px 22px; }
   .hero-words { padding-top: 180px; }
   .addr-grid, .foot-grid, .contact-facts, .contact-form .row { grid-template-columns: 1fr; }
   .contact-facts div:last-child { grid-column: auto; }

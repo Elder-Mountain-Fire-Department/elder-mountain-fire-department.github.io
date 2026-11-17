@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="/css/site.css?v={{ build.v }}">
 </head>
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
+<script>document.documentElement.classList.add("js")</script>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head{% if page.url == "/" %} over{% endif %}">
   <div class="wrap head-row">
@@ -26,7 +27,8 @@
       <img src="/img/brand/emvfd-logo.png?v={{ build.v }}" alt="" width="56" height="56" eleventy:ignore>
       <span class="brand-name">Elder Mountain <span>Fire Department</span></span>
     </a>
-    <nav class="site-nav" aria-label="Main">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
       <ul>
       {%- for item in nav %}
         <li><a href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
@@ -61,6 +63,15 @@
   </div>
   <div class="wrap foot-base">© {{ "" | year }} {{ site.name }}</div>
 </footer>
+<script>
+(function () {
+  var head = document.querySelector(".site-head"), btn = head.querySelector(".nav-toggle");
+  function set(open) { head.classList.toggle("open", open); btn.setAttribute("aria-expanded", open ? "true" : "false"); btn.textContent = open ? "Close" : "Menu"; }
+  btn.addEventListener("click", function () { set(!head.classList.contains("open")); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && head.classList.contains("open")) { set(false); btn.focus(); } });
+  head.querySelectorAll(".site-nav a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
+})();
+</script>
 {%- if page.url == "/" %}
 <script>
 (function () {
