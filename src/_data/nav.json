@@ -1,6 +1,14 @@
 [
-  { "label": "About", "url": "/about/" },
-  { "label": "Photos", "url": "/photo-gallery/" },
-  { "label": "Join us", "url": "/join-us/" },
-  { "label": "Contact", "url": "/contact/" }
+  {
+    "label": "About",
+    "url": "/about/"
+  },
+  {
+    "label": "Photos",
+    "url": "/photo-gallery/"
+  },
+  {
+    "label": "Join or contact us",
+    "url": "/contact/"
+  }
 ]

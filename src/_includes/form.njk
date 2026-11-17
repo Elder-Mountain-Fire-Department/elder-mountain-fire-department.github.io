@@ -2,23 +2,25 @@
 {%- if site.formKey %}
 <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
   <input type="hidden" name="access_key" value="{{ site.formKey }}">
-  <input type="hidden" name="subject" value="[EMVFD] Website message">
+  <input type="hidden" name="subject" value="[EMFD] Website message">
   <input type="hidden" name="from_name" value="eldervfd.org">
   <input type="hidden" name="redirect" value="{{ site.url }}/thanks/">
   <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
-  <label for="f-topic">What is this about?</label>
+  <label for="f-topic">I want to</label>
   <select id="f-topic" name="topic" required>
-    <option value="Volunteering / membership">I want to volunteer or join</option>
-    <option value="Information request" selected>I have a question or need information</option>
+    <option value="Volunteering / membership">Volunteer or join the department</option>
+    <option value="Information request" selected>Ask a question or request information</option>
   </select>
   <label for="f-name">Name</label>
   <input id="f-name" name="name" type="text" autocomplete="name" required>
-  <label for="f-email">Email</label>
-  <input id="f-email" name="email" type="email" autocomplete="email" required>
-  <label for="f-phone">Phone <span class="opt">(optional)</span></label>
-  <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+  <div class="row">
+    <div><label for="f-email">Email</label>
+    <input id="f-email" name="email" type="email" autocomplete="email" required></div>
+    <div><label for="f-phone">Phone <span class="opt">(optional)</span></label>
+    <input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+  </div>
   <label for="f-message" id="f-message-label">Message</label>
-  <textarea id="f-message" name="message" rows="6" required></textarea>
+  <textarea id="f-message" name="message" rows="4" required></textarea>
   <button class="button" type="submit">Send</button>
   <p class="form-status" role="status" aria-live="polite"></p>
 </form>
@@ -29,7 +31,7 @@
   var join = "Volunteering / membership";
   function sync() {
     var j = topic.value === join;
-    f.subject.value = j ? "[EMVFD] Volunteer application" : "[EMVFD] Information request";
+    f.subject.value = j ? "[EMFD] Volunteer application" : "[EMFD] Information request";
     label.textContent = j ? "Tell us a little about yourself and how you would like to help" : "Message";
   }
   if (/[?&]topic=join\b/.test(location.search)) topic.value = join;

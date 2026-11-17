@@ -16,8 +16,7 @@ Actions tab builds the site and publishes it. If a build fails, the old version 
 | Address, email, Facebook link | `src/_data/site.json` |
 | Menu | `src/_data/nav.json` |
 | About page | `src/about.md` |
-| Join us page (its button opens the contact form set to volunteering) | `src/join-us.md` |
-| Contact page | `src/contact.md` |
+| Join or contact us page (volunteer applications and questions, one form) | `src/contact.njk` (form fields in `src/_includes/form.njk`) |
 | Home page | `src/index.njk` |
 | Photo gallery captions and order | `src/_data/gallery.json` |
 | Member resources links | `src/emfd-members-page.md` |
