@@ -364,7 +364,12 @@
   function settle(p) { return p.then(function (v) { return { ok: true, value: v }; }, function (e) { return { ok: false, error: e }; }); }
   function run() { Promise.all([elderEast(), rawsWeather(), rawsFuel(), ban(), alerts(), forecastGrid(), airQuality()].map(settle)).then(render); }
 
+  // Refresh every 5 minutes, but only while the page is being looked at; catch up when the tab comes back.
+  var last = 0, REFRESH = 5 * 60000;
+  function tick() { if (!document.hidden && Date.now() - last >= REFRESH) { last = Date.now(); header(); run(); } }
   header();
+  last = Date.now();
   run();
-  setInterval(run, 5 * 60000);
+  setInterval(tick, 30000);
+  document.addEventListener("visibilitychange", tick);
 })();
