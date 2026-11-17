@@ -34,6 +34,26 @@ bodyClass: home
   </div>
 </section>
 
+<section class="burn-home">
+  <div class="burn-home-inner rating" id="rating" aria-live="polite">
+    <div>
+      <p class="rating-label" id="rating-label">Today's peak fire danger</p>
+      <p class="rating-word" id="rating-word">Checking…</p>
+      <ol class="rating-scale" aria-hidden="true">
+        <li data-c="vl">Very low</li>
+        <li data-c="l">Low</li>
+        <li data-c="m">Moderate</li>
+        <li data-c="h">High</li>
+        <li data-c="vh">Very high</li>
+      </ol>
+    </div>
+    <div>
+      <p class="rating-advice" id="rating-advice">Planning to burn brush? Check today's conditions first.</p>
+      <p><a class="text-link" href="/burning/">Burn windows, five-day forecast, and permit rules</a></p>
+    </div>
+  </div>
+</section>
+
 <section class="join">
   <div class="join-inner">
     <figure class="join-photo">
@@ -59,3 +79,4 @@ bodyClass: home
   </ul>
 </section>
 </div>
+<script src="/js/burn.js?v={{ build.v }}" defer></script>

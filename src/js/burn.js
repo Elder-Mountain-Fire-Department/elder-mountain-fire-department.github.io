@@ -36,7 +36,9 @@
   }
   function worse(a, b) { if (!a) return b; if (!b) return a; return ORDER[b.key] > ORDER[a.key] ? b : a; }
   function num(v) { return typeof v === "number" && isFinite(v) ? v : null; }
-  function $(id) { return document.getElementById(id); }
+  // Missing elements get a detached stand-in, so the same script can drive the full burn page and the short summary
+  // on the home page, which only has the headline elements.
+  function $(id) { return document.getElementById(id) || document.createElement("div"); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function timeStr(d) { return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: TZ }); }
   function bucket(min) { return Math.floor(Date.now() / (min * 60000)); }
@@ -331,7 +333,8 @@
       if (w.caution.length) parts.push("Moderate between " + w.caution.join(" and between ") + ".");
       if (w.no.length) parts.push("High, do not burn, between " + w.no.join(" and between ") + ".");
     }
-    $("windows-section").querySelector("h2").textContent = tomorrow ? "Burn windows tomorrow" : "Burn windows today";
+    var wh = $("windows-section").querySelector("h2");
+    if (wh) wh.textContent = tomorrow ? "Burn windows tomorrow" : "Burn windows today";
     $("windows-text").textContent = parts.join(" ");
     $("windows-section").hidden = false;
     return w;

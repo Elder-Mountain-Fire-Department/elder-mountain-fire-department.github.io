@@ -107,6 +107,13 @@ p, ul { margin: 0 0 1em; }
 .calls { list-style: none; padding: 0; margin-top: 1.6em; border-top: 1px solid var(--rule); }
 .calls li { font-weight: 500; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 
+/* Home: today's fire danger (filled in by burn.js) */
+.burn-home { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) var(--space); }
+.burn-home-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 16px clamp(32px, 6vw, 96px); align-items: end; }
+.burn-home .rating-word { font-size: clamp(2.6rem, 5.5vw, 4.2rem); }
+.burn-home .rating-scale { margin-bottom: 0; }
+.burn-home .rating-advice { margin-bottom: 0.6em; }
+
 /* Home: join */
 .join { background: var(--mist); }
 .join-inner { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 6vw, 96px); align-items: center; max-width: var(--max); margin: 0 auto; padding: var(--space) var(--gutter); }
@@ -240,7 +247,7 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
 
 @media (max-width: 900px) {
   .hero-bg img { object-position: 41% 60%; }
-  .response, .join-inner, .contact { grid-template-columns: 1fr; }
+  .response, .join-inner, .contact, .burn-home-inner { grid-template-columns: 1fr; }
   .status-list div { grid-template-columns: 1fr; }
   .contact { min-height: 0; }
   .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: 44vw; max-height: none; }
