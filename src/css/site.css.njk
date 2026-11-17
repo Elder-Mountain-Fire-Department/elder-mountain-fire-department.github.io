@@ -140,9 +140,10 @@ p, ul { margin: 0 0 1em; }
 .page-photo { margin: 0 0 clamp(36px, 5vw, 64px); }
 .page-photo img { width: 100%; aspect-ratio: 21 / 9; object-fit: cover; border-radius: 4px; }
 .prose { max-width: 40rem; }
-/* Ordinary pages (page.njk): a centered reading column under a full-width photo */
-.doc .page-head, .doc .prose { max-width: 42rem; margin-left: auto; margin-right: auto; }
-.doc .page-photo { margin-bottom: clamp(32px, 4.5vw, 56px); }
+/* Ordinary pages (page.njk): title, photo, and text share one centered column */
+.doc .page-head, .doc .page-photo, .doc .prose { max-width: 46rem; margin-left: auto; margin-right: auto; }
+.doc .page-photo { margin-bottom: clamp(28px, 4vw, 48px); }
+.doc .page-photo img { aspect-ratio: 16 / 9; }
 .prose h2 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); margin-top: 1.5em; }
 .prose ul { padding-left: 1.2em; }
 .prose li { margin-bottom: 0.4em; }

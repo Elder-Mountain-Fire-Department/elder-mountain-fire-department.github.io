@@ -7,7 +7,7 @@ layout: base.njk
     {%- if lede %}<p class="lede">{{ lede }}</p>{% endif %}
   </header>
   {%- if image %}
-  <figure class="page-photo"><img src="/img/photos/{{ image }}" alt="{{ imageAlt }}" sizes="(min-width: 1100px) 1040px, 100vw"></figure>
+  <figure class="page-photo"><img src="/img/photos/{{ image }}" alt="{{ imageAlt }}" sizes="(min-width: 800px) 736px, 100vw"></figure>
   {%- endif %}
   <div class="prose">
 {{ content | safe }}
