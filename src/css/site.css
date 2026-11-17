@@ -145,3 +145,5 @@ p, ul { margin: 0 0 1em; }
   .gallery, .addr-grid, .foot-grid { grid-template-columns: 1fr; }
   .emergency span { display: block; }
 }
+.contact-form select { font: inherit; padding: 10px 12px; border: 1px solid #bdb6aa; border-radius: 4px; background: #fff; width: 100%; }
+.doc-body .addr-grid { margin-top: 48px; }

@@ -16,7 +16,7 @@ Actions tab builds the site and publishes it. If a build fails, the old version 
 | Address, email, Facebook link | `src/_data/site.json` |
 | Menu | `src/_data/nav.json` |
 | About page | `src/about.md` |
-| Join us page | `src/join-us.md` |
+| Join us page (its button opens the contact form set to volunteering) | `src/join-us.md` |
 | Contact page | `src/contact.md` |
 | Home page | `src/index.njk` |
 | Photo gallery captions and order | `src/_data/gallery.json` |
@@ -45,12 +45,12 @@ Needs Node 22. `npm install`, then `npm run dev` for a live preview at http://lo
 ## How it is put together
 
 - `src/_includes/base.njk` is the frame of every page: the 911 strip, header, menu, and footer.
-  `page.njk` is the layout for ordinary pages, `form.njk` the contact form.
+  `page.njk` is the layout for ordinary pages, `form.njk` the one contact form (on /contact/), which asks whether the message is a volunteer application or an information request and sets the email subject to match.
 - `src/css/site.css` holds all the styles. Fonts are Barlow Condensed (headings) and Source Sans 3 (text),
   stored in `src/fonts/`.
 - Logos and icons are in `src/img/brand/` (the 2025 round logo is the main one; `emfr-shield.png` is the older
   Maltese cross shield).
-- The contact and volunteer forms send email through [Web3Forms](https://web3forms.com). The access key is
+- The contact form sends email through [Web3Forms](https://web3forms.com). The access key is
   `formKey` in `src/_data/site.json` and is tied to info@eldervfd.org. Without a key, the pages show an
   email link instead of a form.
 - `wordpress-archive/` holds the text of the old WordPress site. It is not published.
