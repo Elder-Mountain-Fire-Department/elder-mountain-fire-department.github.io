@@ -5,5 +5,4 @@ permalink: /emfd-members-page/
 noindex: true
 eleventyExcludeFromCollections: true
 ---
-- [SE Fire Training Calendar](https://sefirecalendar.km4yhi.com/#classes)
-- [Tennessee fire training resources](https://sefirecalendar.km4yhi.com/#sources)
+- [TN Fire Services Info](https://tnfire.org/): training calendar and resources for Tennessee firefighters
