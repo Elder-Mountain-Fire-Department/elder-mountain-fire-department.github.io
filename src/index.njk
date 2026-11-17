@@ -8,14 +8,16 @@ bodyClass: home
     <img src="/img/photos/elder-mountain-gorge.jpg" alt="" eleventy:widths="800,1600,2400" sizes="(max-width: 900px) 1600px, 100vw" loading="eager" fetchpriority="high">
   </div>
   <div class="hero-words">
-    <h1>Elder Mountain Volunteer Fire Department</h1>
-    <p>We volunteer our time to protect the lives and property of people living in and visiting the quiet mountain community of Elder Mountain, Tennessee.</p>
+    <h1 class="visually-hidden">Elder Mountain Volunteer Fire Department</h1>
+    <p class="hero-lede">We volunteer our time to protect the lives and property of people living in and visiting the quiet mountain community of Elder Mountain, Tennessee.</p>
     <p class="hero-911">Call 911 for emergencies</p>
-    <p><a class="button outline" href="/contact/?topic=join">Join us</a></p>
   </div>
+  <a class="scroll-cue" href="#more" aria-label="Scroll down to read more">
+    <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
 </section>
 
-<div class="over-hero">
+<div class="over-hero" id="more">
 <section class="response">
   <figure class="response-photo">
     <img src="/img/photos/engine-1-pump-panel.jpg" alt="Side of the engine showing the Elder Mountain Fire Rescue shield and the pump panel" sizes="(min-width: 900px) 50vw, 100vw">

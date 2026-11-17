@@ -61,5 +61,16 @@
   </div>
   <div class="wrap foot-base">© {{ "" | year }} {{ site.name }}</div>
 </footer>
+{%- if page.url == "/" %}
+<script>
+(function () {
+  var head = document.querySelector(".site-head.over"), hero = document.querySelector(".hero");
+  function update() { head.classList.toggle("solid", window.scrollY > hero.offsetHeight - head.offsetHeight); }
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+</script>
+{%- endif %}
 </body>
 </html>
