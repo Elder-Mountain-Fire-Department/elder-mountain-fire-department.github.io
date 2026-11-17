@@ -220,6 +220,16 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
 .checklist li { margin-bottom: 0.5em; }
 .how p { max-width: 46rem; }
 
+/* About: apparatus */
+.apparatus { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: start; margin: 1em 0 0.5em; }
+.apparatus-photo { margin: 0; }
+.apparatus-photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; }
+.apparatus-list { margin: 0; }
+.apparatus-list div + div { margin-top: 1.2em; padding-top: 1.2em; border-top: 1px solid var(--rule); }
+.apparatus-list dt { font-weight: 700; font-size: 1.15rem; }
+.apparatus-list dd { margin: 0.2em 0 0; }
+.soon { font-weight: 500; font-size: 0.9rem; color: var(--ink-soft); margin-left: 0.5em; }
+
 /* Gallery: uncropped photos in columns */
 .masonry { list-style: none; margin: 0; padding: 0; columns: 3 300px; column-gap: 18px; }
 .masonry li { break-inside: avoid; margin-bottom: 26px; }
@@ -256,6 +266,7 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
+  .apparatus { grid-template-columns: 1fr; }
   .masonry { columns: 2; column-gap: 10px; }
   .masonry li { margin-bottom: 16px; }
   .masonry figcaption { font-size: 0.85rem; line-height: 1.35; margin-top: 5px; }
