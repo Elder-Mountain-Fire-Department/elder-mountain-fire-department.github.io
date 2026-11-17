@@ -13,6 +13,7 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({
     "src/fonts": "fonts",
+    "src/js": "js",
     "src/img/brand": "img/brand",
     "src/favicon.ico": "favicon.ico",
     "src/apple-touch-icon.png": "apple-touch-icon.png",

@@ -20,6 +20,7 @@ Actions tab builds the site and publishes it. If a build fails, the old version 
 | Home page | `src/index.njk` |
 | Photo gallery captions and order | `src/_data/gallery.json` |
 | Member resources links | `src/emfd-members-page.md` |
+| Burn conditions page text and permit rules | `src/burning.njk` (live data and the index in `src/js/burn.js`) |
 
 Pages ending in `.md` are [Markdown](https://www.markdownguide.org/basic-syntax/): plain text, with `## ` for a
 heading and `[link text](https://example.com)` for a link. Leave the block between the `---` lines at the top alone
@@ -52,6 +53,14 @@ Needs Node 22. `npm install`, then `npm run dev` for a live preview at http://lo
 - The contact form sends email through [Web3Forms](https://web3forms.com). The access key is
   `formKey` in `src/_data/site.json` and is tied to info@eldervfd.org. Without a key, the pages show an
   email link instead of a form.
+- `/burning/` is built entirely in the browser by `src/js/burn.js`, from public sources that allow it, every 5 minutes:
+  Elder East weather station (FST Dynamics mesonet) for wind gust and humidity; the Prentice Cooper State Forest RAWS
+  (USDA Forest Service FEMS, station 409201, fuel model Y) for 10-hour fuel moisture and KBDI; the Tennessee Department of
+  Agriculture burn-ban map layer; National Weather Service alerts and forecast for zones TNZ098 (Marion) and TNZ099 (Hamilton);
+  and the Air Pollution Control Bureau's "Burning allowed?" and air quality widget (apcb.org page 156 through its WordPress
+  API). The index is the BAFDRS points score (each factor 1-6, total 3-18). If a source stops working, its line says
+  "Could not check" and the rest of the page still works. The APCB and burn-ban sources are not official APIs, so check them
+  if something looks wrong.
 - `wordpress-archive/` holds the text of the old WordPress site. It is not published.
 
 ## Domain and email

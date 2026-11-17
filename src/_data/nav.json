@@ -8,6 +8,10 @@
     "url": "/photo-gallery/"
   },
   {
+    "label": "Burn conditions",
+    "url": "/burning/"
+  },
+  {
     "label": "Join or contact us",
     "url": "/contact/"
   }
