@@ -4,27 +4,25 @@ title: Home
 bodyClass: home
 ---
 <section class="hero">
-  <img class="hero-img" src="/img/photos/elder-mountain-gorge.jpg" alt="The Tennessee River Gorge seen from Elder Mountain at sunset, the river curving around a forested ridge" eleventy:widths="800,1600,2400" sizes="(max-width: 900px) 1600px, 100vw" loading="eager" fetchpriority="high">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/img/photos/elder-mountain-gorge.jpg" alt="" eleventy:widths="800,1600,2400" sizes="(max-width: 900px) 1600px, 100vw" loading="eager" fetchpriority="high">
+  </div>
   <div class="hero-words">
-    <h1><span class="h1-main">Elder Mountain</span> <span class="h1-sub">Volunteer Fire Department</span></h1>
+    <h1>Elder Mountain Volunteer Fire Department</h1>
+    <p>We volunteer our time to protect the lives and property of people living in and visiting the quiet mountain community of Elder Mountain, Tennessee.</p>
+    <p class="hero-911">Call 911 for emergencies</p>
+    <p><a class="button outline" href="/contact/?topic=join">Join us</a></p>
   </div>
 </section>
 
-<section class="intro">
-  <p class="tagline">Volunteering to save lives and property on Elder Mountain, Tennessee.</p>
-  <div class="intro-side">
-    <p>We are a 501(c)(3) nonprofit fire department staffed entirely by volunteers from the community, with mutual aid to our neighboring departments.</p>
-    <p class="actions"><a class="button" href="/contact/?topic=join">Volunteer with us</a> <a class="text-link" href="/about/">About the department</a></p>
-  </div>
-</section>
-
+<div class="over-hero">
 <section class="response">
   <figure class="response-photo">
-    <img src="/img/photos/engine-1-pump-panel.jpg" alt="Side of the engine showing the Elder Mountain Fire Rescue shield and the pump panel" sizes="(min-width: 900px) 55vw, 100vw">
+    <img src="/img/photos/engine-1-pump-panel.jpg" alt="Side of the engine showing the Elder Mountain Fire Rescue shield and the pump panel" sizes="(min-width: 900px) 50vw, 100vw">
   </figure>
   <div class="response-text">
-    <h2>Rapid, all‑hazard response</h2>
-    <p>We respond to the residents of Elder Mountain, and we back up our neighboring departments through mutual aid agreements.</p>
+    <h2>Rapid, all&#8209;hazard response</h2>
+    <p>We provide an all-hazard response to the residents of Elder Mountain and mutual aid to our neighboring departments.</p>
     <ul class="calls">
       <li>Structural, vehicle, and wildland fires</li>
       <li>Rescues and vehicle accidents</li>
@@ -35,13 +33,15 @@ bodyClass: home
 </section>
 
 <section class="join">
-  <figure class="join-photo">
-    <img src="/img/photos/lz-training-group.jpg" alt="Volunteers standing in front of a LifeForce medical helicopter in a field" sizes="(min-width: 900px) 60vw, 100vw">
-  </figure>
-  <div class="join-text">
-    <h2>Want to volunteer to help your community?</h2>
-    <p>About 20 volunteers serve as firefighters, emergency medical technicians, medical first responders, and support staff, all trained or in training. We are always accepting applications for firefighters and support members.</p>
-    <p><a class="button" href="/contact/?topic=join">Apply to volunteer</a></p>
+  <div class="join-inner">
+    <figure class="join-photo">
+      <img src="/img/photos/lz-training-group.jpg" alt="Volunteers standing in front of a LifeForce medical helicopter in a field" sizes="(min-width: 900px) 55vw, 100vw">
+    </figure>
+    <div class="join-text">
+      <h2>Want to volunteer to help your community?</h2>
+      <p>About 20 volunteers serve as firefighters, emergency medical technicians, medical first responders, and support staff, all trained or in training. We are always accepting applications for firefighters and support members.</p>
+      <p><a class="button" href="/contact/?topic=join">Apply to volunteer</a></p>
+    </div>
   </div>
 </section>
 
@@ -56,3 +56,4 @@ bodyClass: home
   {%- endif %}{% endfor %}
   </ul>
 </section>
+</div>

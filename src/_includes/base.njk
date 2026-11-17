@@ -11,7 +11,7 @@
 <meta property="og:description" content="{{ description or site.tagline }}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:image" content="{{ site.url }}/img/brand/emvfd-logo.png">
-<meta name="theme-color" content="#1d3122">
+<meta name="theme-color" content="#1a1a1a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -20,8 +20,7 @@
 </head>
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
 <a class="skip" href="#main">Skip to content</a>
-<p class="emergency"><span class="wrap"><strong>Emergency? Call 911.</strong> Do not use this website or email to report one.</span></p>
-<header class="site-head">
+<header class="site-head{% if page.url == "/" %} over{% endif %}">
   <div class="wrap head-row">
     <a class="brand" href="/">
       <img src="/img/brand/emvfd-logo.png" alt="" width="56" height="56" eleventy:ignore>
@@ -57,7 +56,7 @@
     <div>
       <p class="foot-label">General questions</p>
       <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-      <p class="foot-911">For emergencies, dial 911.</p>
+      <p><a href="/emfd-members-page/">Members page</a></p>
     </div>
   </div>
   <div class="wrap foot-base">© {{ "" | year }} {{ site.name }}</div>
