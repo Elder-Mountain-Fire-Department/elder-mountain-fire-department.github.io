@@ -1,0 +1,3 @@
+// Cache-busting version for CSS, fonts and icons: the build time, appended as ?v=...
+// Photos don't need it: eleventy-img gives each version a new file name.
+export default { v: Math.floor(Date.now() / 1000).toString() };

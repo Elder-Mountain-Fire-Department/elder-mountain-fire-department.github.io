@@ -12,7 +12,6 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addPassthroughCopy({
-    "src/css": "css",
     "src/fonts": "fonts",
     "src/img/brand": "img/brand",
     "src/favicon.ico": "favicon.ico",

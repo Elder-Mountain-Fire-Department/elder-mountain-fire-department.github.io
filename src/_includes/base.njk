@@ -12,18 +12,18 @@
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:image" content="{{ site.url }}/img/brand/emvfd-logo.png">
 <meta name="theme-color" content="#1a1a1a">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="preload" href="/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/site.css">
+<link rel="icon" href="/favicon.ico?v={{ build.v }}" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v={{ build.v }}">
+<link rel="manifest" href="/site.webmanifest?v={{ build.v }}">
+<link rel="preload" href="/fonts/plus-jakarta-sans-latin-wght-normal.woff2?v={{ build.v }}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/site.css?v={{ build.v }}">
 </head>
 <body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head{% if page.url == "/" %} over{% endif %}">
   <div class="wrap head-row">
     <a class="brand" href="/">
-      <img src="/img/brand/emvfd-logo.png" alt="" width="56" height="56" eleventy:ignore>
+      <img src="/img/brand/emvfd-logo.png?v={{ build.v }}" alt="" width="56" height="56" eleventy:ignore>
       <span class="brand-name">Elder Mountain <span>Volunteer Fire Department</span></span>
     </a>
     <nav class="site-nav" aria-label="Main">

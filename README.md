@@ -46,7 +46,7 @@ Needs Node 22. `npm install`, then `npm run dev` for a live preview at http://lo
 
 - `src/_includes/base.njk` is the frame of every page: the 911 strip, header, menu, and footer.
   `page.njk` is the layout for ordinary pages, `form.njk` the one contact form (on /contact/), which asks whether the message is a volunteer application or an information request and sets the email subject to match.
-- `src/css/site.css` holds all the styles. Fonts are Plus Jakarta Sans, the typeface of the original WordPress site (one variable font file for all weights),
+- `src/css/site.css.njk` holds all the styles (Eleventy writes it to `/css/site.css`). CSS, fonts, icons, and the logo are linked with `?v=<build time>` from `src/_data/build.js`, so every deploy busts browser caches; photos get new file names from the image resizer instead. Fonts are Plus Jakarta Sans, the typeface of the original WordPress site (one variable font file for all weights),
   stored in `src/fonts/`.
 - Logos and icons are in `src/img/brand/` (the 2025 round logo is the main one; `emfr-shield.png` is the older
   Maltese cross shield).

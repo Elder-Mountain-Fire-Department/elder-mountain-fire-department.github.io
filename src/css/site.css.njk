@@ -1,6 +1,10 @@
+---
+permalink: /css/site.css
+eleventyExcludeFromCollections: true
+---
 /* Plus Jakarta Sans, the typeface of the original eldervfd.org, as one variable font (weights 200-800). */
-@font-face { font-family: "Plus Jakarta Sans"; font-style: normal; font-weight: 200 800; font-display: swap; src: url(/fonts/plus-jakarta-sans-latin-wght-normal.woff2) format("woff2-variations"); }
-@font-face { font-family: "Plus Jakarta Sans"; font-style: italic; font-weight: 200 800; font-display: swap; src: url(/fonts/plus-jakarta-sans-latin-wght-italic.woff2) format("woff2-variations"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-style: normal; font-weight: 200 800; font-display: swap; src: url(/fonts/plus-jakarta-sans-latin-wght-normal.woff2?v={{ build.v }}) format("woff2-variations"); }
+@font-face { font-family: "Plus Jakarta Sans"; font-style: italic; font-weight: 200 800; font-display: swap; src: url(/fonts/plus-jakarta-sans-latin-wght-italic.woff2?v={{ build.v }}) format("woff2-variations"); }
 
 :root {
   --ink: #1a1a1a;        /* the original site's charcoal */
