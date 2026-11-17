@@ -103,6 +103,8 @@ renewal paid even if the WordPress plan is cancelled.
   certificate automatically.
 - The MX, SPF, DKIM, and Google verification records are for the department's Google Workspace email. Do not
   change them.
+- The TXT record `_github-pages-challenge-Elder-Mountain-Fire-Department` verifies the domain for the GitHub org, so
+  no other GitHub account can claim eldervfd.org. Keep it.
 
 ## Writing style
 
