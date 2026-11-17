@@ -6,43 +6,45 @@ permalink: /burning/
 ---
 <article class="burn">
   <header class="burn-head">
-    <h1>Can I burn today?</h1>
-    <p class="lede">Live conditions on Elder Mountain and today's official burn status for Marion County. This page updates itself every five minutes.</p>
+    <h1>Burn conditions</h1>
+    <p class="burn-date" id="burn-date"></p>
   </header>
 
-  <section class="verdict" id="verdict" data-level="loading" aria-live="polite">
-    <div class="verdict-main">
-      <p class="verdict-word" id="verdict-word">Checking conditions…</p>
-      <ul class="verdict-why" id="verdict-why"></ul>
-      <p class="verdict-time" id="verdict-time"></p>
-    </div>
-    <div class="index-box">
-      <p class="index-label">Elder Mountain burn index</p>
-      <p class="index-value"><span id="index-score">–</span><span class="index-of"> / 18</span></p>
-      <p class="index-class" id="index-class">&nbsp;</p>
-      <ol class="index-scale" aria-label="Index scale">
-        <li data-c="vl"><span>Very low</span></li>
-        <li data-c="l"><span>Low</span></li>
-        <li data-c="m"><span>Moderate</span></li>
-        <li data-c="h"><span>High</span></li>
-        <li data-c="vh"><span>Very high</span></li>
-      </ol>
-    </div>
+  <section class="rating" id="rating" aria-live="polite">
+    <p class="rating-label">Fire danger on Elder Mountain</p>
+    <p class="rating-word" id="rating-word">Checking…</p>
+    <ol class="rating-scale" aria-hidden="true">
+      <li data-c="vl">Very low</li>
+      <li data-c="l">Low</li>
+      <li data-c="m">Moderate</li>
+      <li data-c="h">High</li>
+      <li data-c="vh">Very high</li>
+    </ol>
+    <p class="rating-advice" id="rating-advice"></p>
+    <p class="rating-meta" id="rating-meta">FST Dynamics Basic Fire Danger Rating System.</p>
   </section>
 
   <section class="burn-section">
-    <h2>Conditions on the mountain</h2>
-    <div class="factor-grid">
-      <div class="factor" id="f-gust"><p class="factor-name">Wind gust, last hour</p><p class="factor-val">–</p><p class="factor-note">Elder East weather station</p></div>
-      <div class="factor" id="f-rh"><p class="factor-name">Humidity</p><p class="factor-val">–</p><p class="factor-note">Elder East weather station</p></div>
-      <div class="factor" id="f-fm"><p class="factor-name">10-hour fuel moisture</p><p class="factor-val">–</p><p class="factor-note">Prentice Cooper State Forest weather station</p></div>
-      <div class="factor" id="f-kbdi"><p class="factor-name">Drought index (KBDI)</p><p class="factor-val">–</p><p class="factor-note">Prentice Cooper State Forest weather station</p></div>
+    <h2>Conditions</h2>
+    <div class="table-wrap">
+      <table class="cond">
+        <thead>
+          <tr><th scope="col"><span class="visually-hidden">Measurement</span></th><th scope="col">Elder East<span>1,575 ft, on the mountain</span></th><th scope="col">Prentice Cooper<span>1,920 ft, 5 miles west</span></th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Temperature</th><td id="ee-temp">–</td><td id="pc-temp">–</td></tr>
+          <tr><th scope="row">Relative humidity</th><td id="ee-rh">–</td><td id="pc-rh">–</td></tr>
+          <tr><th scope="row">Wind</th><td id="ee-wind">–</td><td id="pc-wind">–</td></tr>
+          <tr><th scope="row">Gusts, past hour</th><td id="ee-gust">–</td><td id="pc-gust">–</td></tr>
+          <tr><th scope="row">Rain, past 3 days</th><td class="na">No rain gauge</td><td id="pc-rain">–</td></tr>
+          <tr><th scope="row">10-hour fuel moisture</th><td class="na">Not measured</td><td id="pc-fm">–</td></tr>
+          <tr><th scope="row">Fire danger</th><td id="ee-cls">–</td><td id="pc-cls">–</td></tr>
+          <tr class="obs"><th scope="row">Observed</th><td id="ee-time">–</td><td id="pc-time">–</td></tr>
+        </tbody>
+      </table>
     </div>
-    <p class="small" id="wx-extra"></p>
-    <div class="forecast" id="forecast" hidden>
-      <h3 id="fc-title">Rest of today</h3>
-      <p id="fc-text"></p>
-    </div>
+    <p id="kbdi" class="note"></p>
+    <p id="forecast" class="note" hidden></p>
   </section>
 
   <section class="burn-section">
@@ -85,21 +87,10 @@ permalink: /burning/
   </section>
 
   <section class="burn-section how">
-    <h2>How the index works</h2>
-    <p>The Elder Mountain burn index adds three scores, each from 1 to 6, so the total runs from 3 to 18. It is based on the BAFDRS fire danger index from FST Dynamics, which runs the Elder East weather station.</p>
-    <table class="points">
-      <thead><tr><th scope="col">Points</th><th scope="col">Wind gust</th><th scope="col">Humidity</th><th scope="col">10-hour fuel moisture</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>5 mph or less</td><td>50% or more</td><td>20% or more</td></tr>
-        <tr><td>2</td><td>6–10 mph</td><td>40–49%</td><td>17–19%</td></tr>
-        <tr><td>3</td><td>11–15 mph</td><td>30–39%</td><td>14–16%</td></tr>
-        <tr><td>4</td><td>16–20 mph</td><td>20–29%</td><td>11–13%</td></tr>
-        <tr><td>5</td><td>21–25 mph</td><td>10–19%</td><td>8–10%</td></tr>
-        <tr><td>6</td><td>over 25 mph</td><td>under 10%</td><td>under 8%</td></tr>
-      </tbody>
-    </table>
-    <p>3–5 is very low, 6–8 low, 9–11 moderate, 12–15 high, and 16–18 very high. We say <strong>do not burn</strong> at high or above, or whenever there is a burn ban for Marion County, a Red Flag Warning, a Fire Weather Watch, a Wind Advisory, gusts of 20 mph or more, or humidity under 25%. Ten-hour fuel moisture is the moisture in sticks about the thickness of a finger, the fuel that carries a fire across the ground.</p>
-    <p class="small">This page is guidance from the Elder Mountain Fire Department. It is not a permit and does not replace the official status from the Tennessee Division of Forestry. Data: <a href="https://mesonet.fstdynamics.com/">FST Dynamics mesonet</a>, <a href="https://fems.fs2c.usda.gov/">USDA Forest Service FEMS</a>, <a href="https://www.weather.gov/mrx/">National Weather Service Morristown</a>, <a href="https://apcb.org/">Chattanooga-Hamilton County Air Pollution Control Bureau</a> (air quality), Tennessee Department of Agriculture.</p>
+    <h2>About the rating</h2>
+    <p>The FST Dynamics Basic Fire Danger Rating System puts fire danger in one of five categories, from very low to very high. It combines how dry the dead fuel on the ground is (the 10-hour fuel moisture, measured in sticks about as thick as a finger), how hard the wind is gusting, and how dry the air is. We rate both weather stations and go by whichever shows the higher danger.</p>
+    <p>We advise against burning when the danger is high or very high, and whenever there is a burn ban for Marion County, a Red Flag Warning, a Fire Weather Watch, a Wind Advisory, gusts of 20 mph or more, or humidity under 25%.</p>
+    <p class="small">This page is guidance from the Elder Mountain Fire Department. It is not a permit and does not replace the official status from the Tennessee Division of Forestry. Data: Elder East weather station (<a href="https://mesonet.fstdynamics.com/">FST Dynamics</a>), Prentice Cooper State Forest weather station (<a href="https://fems.fs2c.usda.gov/">USDA Forest Service</a>), <a href="https://www.weather.gov/mrx/">National Weather Service Morristown</a>, <a href="https://apcb.org/">Chattanooga-Hamilton County Air Pollution Control Bureau</a> (air quality), and the Tennessee Department of Agriculture.</p>
   </section>
 </article>
 <script src="/js/burn.js?v={{ build.v }}" defer></script>
