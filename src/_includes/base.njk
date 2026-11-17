@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{% if title and page.url != "/" %}{{ title }} | {% endif %}{{ site.name }}</title>
 <meta name="description" content="{{ description or site.tagline }}">
 {%- if noindex %}<meta name="robots" content="noindex">{% endif %}
@@ -11,7 +11,7 @@
 <meta property="og:description" content="{{ description or site.tagline }}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
 <meta property="og:image" content="{{ site.url }}/img/brand/emvfd-logo.png">
-<meta name="theme-color" content="#1a1a1a">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico?v={{ build.v }}" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v={{ build.v }}">
 <link rel="manifest" href="/site.webmanifest?v={{ build.v }}">
@@ -75,8 +75,14 @@
 {%- if page.url == "/" %}
 <script>
 (function () {
+  // Fade the header from clear to white over the first half of the banner.
   var head = document.querySelector(".site-head.over"), hero = document.querySelector(".hero");
-  function update() { head.classList.toggle("solid", window.scrollY > hero.offsetHeight - head.offsetHeight); }
+  function update() {
+    var p = Math.min(1, Math.max(0, window.scrollY / (hero.offsetHeight * 0.5)));
+    head.style.setProperty("--fade", p.toFixed(3));
+    head.classList.toggle("dark", p >= 0.45);
+    head.classList.toggle("solid", p >= 1);
+  }
   window.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
   update();

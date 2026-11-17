@@ -16,7 +16,7 @@ eleventyExcludeFromCollections: true
   --red-dark: #a8170f;
   --font: "Plus Jakarta Sans", system-ui, sans-serif;
   --max: 1240px;
-  --gutter: clamp(20px, 4vw, 56px);
+  --gutter: max(clamp(20px, 4vw, 56px), env(safe-area-inset-left), env(safe-area-inset-right));
   --edge: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
   --space: clamp(72px, 10vw, 140px);
 }
@@ -40,8 +40,10 @@ p, ul { margin: 0 0 1em; }
 
 /* Header stays at the top while scrolling: a white bar on inner pages; on the home page it starts clear over the photo
    and turns white once the photo has scrolled away (script in base.njk). */
-.site-head { background: var(--paper); border-bottom: 1px solid var(--rule); position: sticky; top: 0; z-index: 20; }
-.site-head.over { position: fixed; left: 0; right: 0; background: transparent; border-bottom-color: transparent; color: #fff; transition: background-color 0.25s, color 0.25s, border-color 0.25s; }
+.site-head { background: var(--paper); border-bottom: 1px solid var(--rule); position: sticky; top: 0; z-index: 20; padding-top: env(safe-area-inset-top); }
+/* Home: clear over the photo, fading to white as the banner scrolls away (--fade 0 to 1, set by the script in base.njk) */
+.site-head.over { --fade: 0; position: fixed; left: 0; right: 0; background: rgba(255, 255, 255, calc(var(--fade) * 0.97)); border-bottom-color: rgba(226, 227, 224, var(--fade)); color: #fff; }
+.site-head.over.dark { color: var(--ink); }
 .site-head.over.solid { background: rgba(255, 255, 255, 0.97); color: var(--ink); border-bottom-color: var(--rule); }
 .head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 28px; flex-wrap: wrap; padding-top: 18px; padding-bottom: 18px; }
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
@@ -77,22 +79,25 @@ p, ul { margin: 0 0 1em; }
 .button:disabled { opacity: 0.6; cursor: wait; }
 .text-link { font-weight: 600; text-decoration: underline; }
 
-/* Home: the gorge stays put while the page scrolls up over it. clip-path keeps the fixed photo inside the hero. */
-.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; clip-path: inset(0); color: #fff; }
-.hero-bg { position: fixed; inset: 0; z-index: -1; }
+/* Home: the gorge sticks to the top of the screen while the page scrolls up over it. It is sized to the large viewport
+   (Safari's toolbars hidden) so it always fills the screen; the text and arrow are lifted by the toolbar height so they sit
+   in the visible area when the page first loads. */
+.hero-bg { position: sticky; top: 0; z-index: 0; height: 100vh; height: 100lvh; margin-bottom: -100vh; margin-bottom: -100lvh; overflow: hidden; background: #2b3a2c; }
+.hero { position: relative; z-index: 1; min-height: 100vh; min-height: 100lvh; display: flex; align-items: flex-end; color: #fff; --toolbar: 0px; }
+@supports (height: 100lvh) { .hero { --toolbar: calc(100lvh - 100svh); } }
 .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .hero-bg::after { content: ""; position: absolute; inset: 0; background: rgba(26, 26, 26, 0.42); }
-.hero-words { position: relative; padding: 140px var(--gutter) clamp(112px, 16vh, 168px) var(--edge); max-width: calc(var(--edge) + 46rem); }
+.hero-words { position: relative; padding: 140px var(--gutter) calc(var(--toolbar) + clamp(112px, 16vh, 168px)) var(--edge); max-width: calc(var(--edge) + 46rem); }
 .hero-name { font-size: clamp(1.15rem, 1.7vw, 1.45rem); font-weight: 700; letter-spacing: -0.01em; margin: 0 0 0.7em; }
 .hero-lede { font-size: clamp(1.3rem, 2.1vw, 1.85rem); font-weight: 300; font-style: italic; line-height: 1.35; letter-spacing: -0.01em; color: #fff; margin: 0; text-wrap: pretty; }
 .hero-911 { color: var(--red); font-weight: 800; font-size: clamp(1.5rem, 2.5vw, 2.1rem); letter-spacing: -0.01em; margin: 0.9em 0 0; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45); }
-.scroll-cue { position: absolute; left: 50%; bottom: clamp(20px, 4vh, 40px); translate: -50% 0; color: #fff; padding: 8px; border-radius: 50%; }
+.scroll-cue { position: absolute; left: 50%; bottom: calc(var(--toolbar) + clamp(20px, 4vh, 40px) + env(safe-area-inset-bottom)); translate: -50% 0; color: #fff; padding: 8px; border-radius: 50%; }
 .scroll-cue svg { display: block; filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4)); }
 @media (prefers-reduced-motion: no-preference) {
   .scroll-cue svg { animation: bob 2s ease-in-out infinite; }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 }
-.over-hero { position: relative; background: var(--paper); }
+.over-hero { position: relative; z-index: 1; background: var(--paper); }
 
 /* Home: response */
 .response { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; max-width: var(--max); margin: 0 auto; padding: var(--space) var(--gutter); }
@@ -226,12 +231,12 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
 .form-status.err { color: var(--red); }
 
 /* Footer: the original site's charcoal */
-.site-foot { position: relative; background: var(--ink); color: #b2b3b5; font-size: 0.98rem; padding-top: clamp(48px, 7vw, 80px); }
+.site-foot { position: relative; z-index: 1; background: var(--ink); color: #b2b3b5; font-size: 0.98rem; padding-top: clamp(48px, 7vw, 80px); }
 .site-foot a { color: #eaeaea; }
 .foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 28px; }
 .foot-name { font-weight: 600; font-size: 1.2rem; line-height: 1.25; color: #eaeaea; }
 .foot-label { font-weight: 600; color: #eaeaea; margin-bottom: 0.3em; }
-.foot-base { border-top: 1px solid #333; margin-top: 40px; padding-top: 18px; padding-bottom: 28px; font-size: 0.88rem; color: #8d8e90; }
+.foot-base { border-top: 1px solid #333; margin-top: 40px; padding-top: 18px; padding-bottom: calc(28px + env(safe-area-inset-bottom)); font-size: 0.88rem; color: #8d8e90; }
 
 @media (max-width: 900px) {
   .hero-bg img { object-position: 41% 60%; }
