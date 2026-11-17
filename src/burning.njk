@@ -11,7 +11,7 @@ permalink: /burning/
   </header>
 
   <section class="rating" id="rating" aria-live="polite">
-    <p class="rating-label">Fire danger on Elder Mountain</p>
+    <p class="rating-label" id="rating-label">Today's peak fire danger</p>
     <p class="rating-word" id="rating-word">Checking…</p>
     <ol class="rating-scale" aria-hidden="true">
       <li data-c="vl">Very low</li>
@@ -24,8 +24,26 @@ permalink: /burning/
     <p class="rating-meta" id="rating-meta">FST Dynamics Basic Fire Danger Rating System.</p>
   </section>
 
+  <section class="burn-section" id="windows-section" hidden>
+    <h2>Burn windows today</h2>
+    <p id="windows-text"></p>
+    <ol class="hours" id="hours"></ol>
+    <p class="small">Each hour is rated from the National Weather Service forecast of wind gusts and humidity for Elder Mountain and the Forest Service forecast of fuel moisture at Prentice Cooper.</p>
+  </section>
+
+  <section class="burn-section" id="days-section" hidden>
+    <h2>Next five days</h2>
+    <div class="table-wrap">
+      <table class="cond days">
+        <thead><tr><th scope="col">Day</th><th scope="col">Peak fire danger</th><th scope="col">Strongest gusts</th><th scope="col">Lowest humidity</th></tr></thead>
+        <tbody id="days"></tbody>
+      </table>
+    </div>
+    <p class="small">Peak between 8 AM and 8 PM. Forecasts change, so check again on the day you plan to burn.</p>
+  </section>
+
   <section class="burn-section">
-    <h2>Conditions</h2>
+    <h2>Conditions right now</h2>
     <div class="table-wrap">
       <table class="cond">
         <thead>
@@ -44,7 +62,6 @@ permalink: /burning/
       </table>
     </div>
     <p id="kbdi" class="note"></p>
-    <p id="forecast" class="note" hidden></p>
   </section>
 
   <section class="burn-section">
@@ -88,7 +105,7 @@ permalink: /burning/
 
   <section class="burn-section how">
     <h2>About the rating</h2>
-    <p>The FST Dynamics Basic Fire Danger Rating System puts fire danger in one of five categories, from very low to very high. It combines how dry the dead fuel on the ground is (the 10-hour fuel moisture, measured in sticks about as thick as a finger), how hard the wind is gusting, and how dry the air is. We rate both weather stations and go by whichever shows the higher danger.</p>
+    <p>The FST Dynamics Basic Fire Danger Rating System puts fire danger in one of five categories, from very low to very high. It combines how dry the dead fuel on the ground is (the 10-hour fuel moisture, measured in sticks about as thick as a finger), how hard the wind is gusting, and how dry the air is. We rate both weather stations and go by whichever shows the higher danger. For today's burn windows and the next five days, we rate every hour from the forecasts, and a day's rating is its highest hour between 8 AM and 8 PM, the same way the national fire danger rating reports a daily peak.</p>
     <p>We advise against burning when the danger is high or very high, and whenever there is a burn ban for Marion County, a Red Flag Warning, a Fire Weather Watch, a Wind Advisory, gusts of 20 mph or more, or humidity under 25%.</p>
     <p class="small">This page is guidance from the Elder Mountain Fire Department. It is not a permit and does not replace the official status from the Tennessee Division of Forestry. Data: Elder East weather station (<a href="https://mesonet.fstdynamics.com/">FST Dynamics</a>), Prentice Cooper State Forest weather station (<a href="https://fems.fs2c.usda.gov/">USDA Forest Service</a>), <a href="https://www.weather.gov/mrx/">National Weather Service Morristown</a>, <a href="https://apcb.org/">Chattanooga-Hamilton County Air Pollution Control Bureau</a> (air quality), and the Tennessee Department of Agriculture.</p>
   </section>

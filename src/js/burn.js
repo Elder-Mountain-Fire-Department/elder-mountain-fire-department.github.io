@@ -1,7 +1,8 @@
 // Burn conditions for Elder Mountain. Everything is fetched in the browser from public sources that allow it.
 // Fire danger: FST Dynamics Basic Fire Danger Rating System (BAFDRS). 10-hour fuel moisture, wind gust, and humidity are
-// each scored 1-6 and summed; the sum maps to a category. Only the category is shown. Both stations are rated and the
-// higher danger is used.
+// each scored 1-6 and summed; the sum maps to a category. Only the category is shown. Right now: both stations are rated
+// and the higher danger is used. Today and the next five days: every hour from 8 AM to 8 PM is rated from the NWS grid
+// forecast (gust, humidity) and the FEMS NFDRS forecast 10-hour fuel moisture; a day's rating is its highest hour.
 (function () {
   "use strict";
 
@@ -84,16 +85,19 @@
     });
   }
 
+  // Observed and forecast NFDRS values at Prentice Cooper (fuel model Y). Forecast rows are hourly about 7 days out.
   function rawsFuel() {
-    var today = new Date(), start = new Date(today.getTime() - 2 * 864e5), end = new Date(today.getTime() + 864e5);
-    var q = "query($s:String,$fm:String!,$a:Date,$b:Date){nfdrsObs(stationIds:$s,fuelModels:$fm,startDateRange:$a,endDateRange:$b,nfdrType:\"O\",per_page:200){data{observation_time ten_hr_tl_fuel_moisture kbdi}}}";
+    var today = new Date(), start = new Date(today.getTime() - 2 * 864e5), end = new Date(today.getTime() + 8 * 864e5);
+    var q = "query($s:String,$fm:String!,$a:Date,$b:Date){nfdrsObs(stationIds:$s,fuelModels:$fm,startDateRange:$a,endDateRange:$b,nfdrType:\"appended\",per_page:1000){data{observation_time nfdr_type ten_hr_tl_fuel_moisture kbdi}}}";
     return fems(q, { s: RAWS_ID, fm: "Y", a: start.toISOString().slice(0, 10), b: end.toISOString().slice(0, 10) }).then(function (d) {
       var rows = ((((d || {}).data || {}).nfdrsObs || {}).data || [])
         .filter(function (r) { return num(r.ten_hr_tl_fuel_moisture) != null; })
         .sort(function (a, b) { return a.observation_time < b.observation_time ? -1 : 1; });
-      if (!rows.length) throw new Error("no rows");
-      var r = rows[rows.length - 1];
-      return { fm: r.ten_hr_tl_fuel_moisture, kbdi: num(r.kbdi), time: new Date(r.observation_time) };
+      var obs = rows.filter(function (r) { return r.nfdr_type === "O"; });
+      if (!obs.length) throw new Error("no rows");
+      var last = obs[obs.length - 1], byHour = {};
+      rows.forEach(function (r) { byHour[r.observation_time.slice(0, 13)] = r.ten_hr_tl_fuel_moisture; });
+      return { fm: last.ten_hr_tl_fuel_moisture, kbdi: num(last.kbdi), time: new Date(last.observation_time), byHour: byHour };
     });
   }
 
@@ -116,35 +120,24 @@
     });
   }
 
-  // NWS gridded forecast for the rest of today's burning hours (or tomorrow's, after 5 PM).
-  function forecast() {
+  // NWS gridded forecast for Elder Mountain, expanded to one value per UTC hour ("YYYY-MM-DDTHH").
+  function forecastGrid() {
     return getJSON("https://api.weather.gov/points/" + POINT).then(function (p) {
       return getJSON(p.properties.forecastGridData);
     }).then(function (g) {
-      function local(d) {
-        var o = {};
-        new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "numeric", hourCycle: "h23" })
-          .formatToParts(d).forEach(function (x) { o[x.type] = x.value; });
-        return { day: o.year + "-" + o.month + "-" + o.day, hour: +o.hour };
+      function hourly(series, scale) {
+        var out = {};
+        ((g.properties[series] || {}).values || []).forEach(function (v) {
+          if (v.value == null) return;
+          var s = v.validTime.split("/"), t0 = new Date(s[0]).getTime();
+          var m = /P(?:(\d+)D)?T?(?:(\d+)H)?/.exec(s[1] || ""), hrs = m ? (+(m[1] || 0) * 24 + +(m[2] || 0)) || 1 : 1;
+          for (var i = 0; i < hrs; i++) out[new Date(t0 + i * 36e5).toISOString().slice(0, 13)] = v.value * scale;
+        });
+        return out;
       }
-      var now = new Date(), hour = local(now).hour, tomorrow = hour >= 17;
-      var target = local(new Date(now.getTime() + (tomorrow ? 864e5 : 0))).day;
-      var startHour = tomorrow ? 9 : Math.max(9, hour);
-      function inWindow(validTime) {
-        var s = validTime.split("/"), t0 = new Date(s[0]), m = /(\d+)H/.exec(s[1] || ""), hrs = m ? +m[1] : 1;
-        for (var i = 0; i < hrs; i++) {
-          var lh = local(new Date(t0.getTime() + i * 36e5));
-          if (lh.day === target && lh.hour >= startHour && lh.hour < 17) return true;
-        }
-        return false;
-      }
-      function pick(series, fn) {
-        var vals = ((g.properties[series] || {}).values || []).filter(function (v) { return v.value != null && inWindow(v.validTime); }).map(function (v) { return v.value; });
-        return vals.length ? fn.apply(null, vals) : null;
-      }
-      var gustKmh = pick("windGust", Math.max), rh = pick("relativeHumidity", Math.min);
-      if (gustKmh == null || rh == null) throw new Error("no forecast in window");
-      return { when: tomorrow ? "Tomorrow between 9 AM and 5 PM" : (hour < 9 ? "Today between 9 AM and 5 PM" : "For the rest of the afternoon"), tomorrow: tomorrow, gust: gustKmh * 0.621371, rh: rh };
+      var gust = hourly("windGust", 0.621371), rh = hourly("relativeHumidity", 1);
+      if (!Object.keys(gust).length || !Object.keys(rh).length) throw new Error("empty grid");
+      return { gust: gust, rh: rh };
     });
   }
 
@@ -212,14 +205,6 @@
     if (cls && ORDER[cls.key] >= ORDER.h) stops.unshift("fire danger is " + cls.name.toLowerCase());
     else if (cls && cls.key === "m") cautions.unshift("fire danger is moderate");
 
-    if (fc.ok && fm != null) {
-      var f = fc.value, fcls = rate(fm, f.gust, f.rh);
-      $("forecast").innerHTML = esc(f.when) + ", the National Weather Service forecasts gusts up to " + round(f.gust) + " mph and humidity as low as " +
-        round(f.rh) + "%. That would put fire danger at <strong class=\"cls-" + fcls.key + "\">" + esc(fcls.name.toLowerCase()) + "</strong>.";
-      $("forecast").hidden = false;
-      if (!f.tomorrow && ORDER[fcls.key] >= ORDER.h) cautions.push("fire danger is forecast to reach " + fcls.name.toLowerCase() + " later today");
-    }
-
     if (bn.ok) {
       $("s-ban").innerHTML = bn.value
         ? "<strong class=\"bad\">A burn ban is in effect for Marion County.</strong> No outdoor fires of any kind, including campfires, grills, and burn barrels."
@@ -248,20 +233,122 @@
       $("s-aq").innerHTML = "Could not check. See the <a href=\"https://apcb.org/daily-report/\">daily air quality report</a>.";
     }
 
+    // Hour-by-hour ratings from the forecasts
+    var plan = (fc.ok && pf.ok) ? buildPlan(pf.value.byHour, fc.value) : null;
+    var nowCls = cls, peak = null, label = "Fire danger right now", windows = null;
+    if (plan) {
+      var day = plan.days[plan.showTomorrow ? 1 : 0];
+      peak = plan.showTomorrow ? day.peak : worse(day.peak, nowCls);
+      label = plan.showTomorrow ? "Tomorrow's peak fire danger" : "Today's peak fire danger";
+      windows = renderWindows(day, plan.showTomorrow ? -1 : plan.nowHour, plan.showTomorrow);
+      renderDays(plan.days.slice(1, 6));
+    }
+    var shown = peak || nowCls;
+
     var advice;
     if (stops.length) advice = "Do not burn today: " + list(stops) + ".";
-    else if (!cls) advice = "We could not get enough station data to rate fire danger. Check the official status below before you burn.";
+    else if (!shown) advice = "We could not get enough station data to rate fire danger. Check the official status below before you burn.";
+    else if (windows && !windows.ok.length && !windows.caution.length) advice = (plan.showTomorrow ? "Do not plan to burn tomorrow" : "Do not burn today") + ": fire danger is forecast to be high.";
+    else if (windows && ORDER[shown.key] >= ORDER.m) advice = "Burn only " + (windows.ok.length ? "between " + windows.ok.join(" or between ") + ", while fire danger is low" : "with care between " + windows.caution.join(" or between ") + ", while fire danger is moderate") + "." + (cautions.length ? " Also note that " + list(cautions) + "." : "");
     else if (cautions.length) advice = "Use caution: " + list(cautions) + ". Burn small piles early in the day, and put the fire out if the wind picks up.";
-    else advice = "Burning is reasonable today with a Forestry permit. Keep piles small and stay with the fire until it is out.";
+    else advice = (plan && plan.showTomorrow ? "Tomorrow looks reasonable for burning with a Forestry permit." : "Burning is reasonable today with a Forestry permit.") + " Keep piles small and stay with the fire until it is out.";
     if (!al.ok && !stops.length) advice += " We could not reach the National Weather Service, so check for a Red Flag Warning first.";
     advice = advice.charAt(0).toUpperCase() + advice.slice(1);
 
-    $("rating").setAttribute("data-c", cls ? cls.key : "");
+    $("rating").setAttribute("data-c", shown ? shown.key : "");
     $("rating").classList.toggle("stop", !!stops.length);
-    $("rating-word").textContent = cls ? cls.name : "Not available";
-    document.querySelectorAll(".rating-scale li").forEach(function (li) { li.classList.toggle("on", !!cls && li.getAttribute("data-c") === cls.key); });
+    $("rating-label").textContent = label;
+    $("rating-word").textContent = shown ? shown.name : "Not available";
+    document.querySelectorAll(".rating-scale li").forEach(function (li) { li.classList.toggle("on", !!shown && li.getAttribute("data-c") === shown.key); });
     $("rating-advice").textContent = advice;
-    $("rating-meta").textContent = "FST Dynamics Basic Fire Danger Rating System. Updated " + timeStr(new Date()) + ".";
+    $("rating-meta").textContent = (plan && nowCls ? "Right now: " + nowCls.name.toLowerCase() + ". " : "") + "FST Dynamics Basic Fire Danger Rating System. Updated " + timeStr(new Date()) + ".";
+  }
+
+  // --- hourly plan -------------------------------------------------------------------------------------------
+
+  var FIRST_HOUR = 8, LAST_HOUR = 19; // rated hours: 8 AM through the hour ending 8 PM
+
+  function localParts(d) {
+    var o = {};
+    new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "numeric", hourCycle: "h23", weekday: "long" })
+      .formatToParts(d).forEach(function (x) { o[x.type] = x.value; });
+    return { day: o.year + "-" + o.month + "-" + o.day, hour: +o.hour, weekday: o.weekday };
+  }
+
+  function hourLabel(h) { var hh = h % 12 || 12; return hh + (h < 12 ? " AM" : " PM"); }
+
+  function buildPlan(fmByHour, grid) {
+    var now = new Date(), nowL = localParts(now), days = [], index = {};
+    var lastFm = null;
+    // walk UTC hours from the start of today to 7 days out
+    var t = Math.floor(now.getTime() / 36e5) * 36e5 - 30 * 36e5;
+    for (var i = 0; i < 24 * 8; i++, t += 36e5) {
+      var d = new Date(t), key = d.toISOString().slice(0, 13), L = localParts(d);
+      if (fmByHour[key] != null) lastFm = fmByHour[key];
+      if (L.day < nowL.day || L.hour < FIRST_HOUR || L.hour > LAST_HOUR) continue;
+      if (!(L.day in index)) { index[L.day] = days.length; days.push({ day: L.day, weekday: L.weekday, hours: [], peak: null, gust: null, rh: null }); }
+      var g = grid.gust[key], r = grid.rh[key], fm = fmByHour[key] != null ? fmByHour[key] : lastFm;
+      var c = rate(fm, g, r), level = !c ? null : (ORDER[c.key] >= ORDER.h || g >= 20 || r < 25) ? "no" : c.key === "m" ? "caution" : "ok";
+      var day = days[index[L.day]];
+      day.hours.push({ hour: L.hour, cls: c, level: level, gust: g, rh: r });
+      if (c) day.peak = worse(day.peak, c);
+      if (g != null) day.gust = Math.max(day.gust || 0, g);
+      if (r != null) day.rh = Math.min(day.rh == null ? 100 : day.rh, r);
+    }
+    return { days: days, nowHour: nowL.hour, showTomorrow: nowL.hour > LAST_HOUR };
+  }
+
+  function runs(hours, level) {
+    var out = [], start = null;
+    hours.forEach(function (h, i) {
+      var match = h.level === level, next = hours[i + 1];
+      if (match && start == null) start = h.hour;
+      if (match && (!next || next.level !== level || next.hour !== h.hour + 1)) { out.push(hourLabel(start) + " and " + hourLabel(h.hour + 1)); start = null; }
+    });
+    return out;
+  }
+
+  function renderWindows(day, nowHour, tomorrow) {
+    var ol = $("hours");
+    ol.innerHTML = "";
+    day.hours.forEach(function (h) {
+      var li = document.createElement("li");
+      li.setAttribute("data-c", h.cls ? h.cls.key : "");
+      if (h.hour < nowHour) li.className = "past";
+      if (h.hour === nowHour) li.className = "now";
+      var hh = h.hour % 12 || 12;
+      li.innerHTML = "<span class=\"bar\"></span><span class=\"hr\">" + hh + (h.hour === 12 ? " PM" : h.hour === FIRST_HOUR ? " AM" : "") + "</span>" +
+        "<span class=\"visually-hidden\">: " + esc(h.cls ? h.cls.name : "no forecast") + "</span>";
+      li.title = hourLabel(h.hour) + ": " + (h.cls ? h.cls.name : "no forecast") + (h.gust != null ? ", gusts " + round(h.gust) + " mph" : "") + (h.rh != null ? ", humidity " + round(h.rh) + "%" : "");
+      ol.appendChild(li);
+    });
+    var left = day.hours.filter(function (h) { return h.hour >= nowHour; });
+    var w = { ok: runs(left, "ok"), caution: runs(left, "caution"), no: runs(left, "no") };
+    var parts = [];
+    if (!left.length) parts.push("Burning hours are over for today.");
+    else {
+      if (w.ok.length) parts.push("Lowest danger between " + w.ok.join(" and between ") + ".");
+      if (w.caution.length) parts.push("Moderate between " + w.caution.join(" and between ") + ".");
+      if (w.no.length) parts.push("High, do not burn, between " + w.no.join(" and between ") + ".");
+    }
+    $("windows-section").querySelector("h2").textContent = tomorrow ? "Burn windows tomorrow" : "Burn windows today";
+    $("windows-text").textContent = parts.join(" ");
+    $("windows-section").hidden = false;
+    return w;
+  }
+
+  function renderDays(days) {
+    var tb = $("days");
+    tb.innerHTML = "";
+    days.forEach(function (d) {
+      var tr = document.createElement("tr");
+      tr.innerHTML = "<th scope=\"row\">" + esc(d.weekday) + "</th>" +
+        "<td class=\"" + (d.peak ? "cls-" + d.peak.key : "") + "\">" + esc(d.peak ? d.peak.name : "–") + "</td>" +
+        "<td>" + (d.gust != null ? round(d.gust) + " mph" : "–") + "</td>" +
+        "<td>" + (d.rh != null ? round(d.rh) + "%" : "–") + "</td>";
+      tb.appendChild(tr);
+    });
+    $("days-section").hidden = !days.length;
   }
 
   function header() {
@@ -272,7 +359,7 @@
   }
 
   function settle(p) { return p.then(function (v) { return { ok: true, value: v }; }, function (e) { return { ok: false, error: e }; }); }
-  function run() { Promise.all([elderEast(), rawsWeather(), rawsFuel(), ban(), alerts(), forecast(), airQuality()].map(settle)).then(render); }
+  function run() { Promise.all([elderEast(), rawsWeather(), rawsFuel(), ban(), alerts(), forecastGrid(), airQuality()].map(settle)).then(render); }
 
   header();
   run();

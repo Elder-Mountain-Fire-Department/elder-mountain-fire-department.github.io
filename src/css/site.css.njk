@@ -186,6 +186,14 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
 .cond tbody th { font-weight: 500; color: var(--ink-soft); width: 34%; }
 .cond td.na, .cond tr.obs td { color: var(--ink-soft); }
 .note { max-width: 46rem; margin: 18px 0 0; }
+.hours { list-style: none; margin: 18px 0 14px; padding: 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; }
+.hours li { text-align: left; font-size: 0.8rem; color: var(--ink-soft); }
+.hours .bar { display: block; height: 34px; background: var(--c, var(--rule)); border-radius: 2px; }
+.hours .hr { display: block; padding-top: 5px; white-space: nowrap; }
+.hours li.past { opacity: 0.35; }
+.hours li.now .bar { outline: 2px solid var(--ink); outline-offset: 2px; }
+.hours li.now .hr { color: var(--ink); font-weight: 700; }
+.days tbody th { width: auto; color: var(--ink); font-weight: 600; }
 .small { font-size: 0.92rem; color: var(--ink-soft); }
 .status-list { margin: 0; border-top: 1px solid var(--rule); }
 .status-list div { display: grid; grid-template-columns: 14rem 1fr; gap: 4px 24px; padding: 13px 0; border-bottom: 1px solid var(--rule); }
@@ -250,4 +258,8 @@ td.cls-vl, td.cls-l, td.cls-m, td.cls-h, td.cls-vh { font-weight: 700; }
   .cond { font-size: 0.95rem; }
   .cond tbody th { width: 38%; }
   .rating-scale { font-size: 0.75rem; }
+  .hours { gap: 2px; }
+  .hours .bar { height: 28px; }
+  .hours li { font-size: 0.7rem; }
+  .hours li:nth-child(even) .hr { visibility: hidden; }
 }
