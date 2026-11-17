@@ -7,7 +7,7 @@ imageAlt: Volunteers standing in front of a LifeForce medical helicopter in a fi
 ---
 The Elder Mountain Volunteer Fire Department (EMVFD) is an all-volunteer force and the first line of defense for the Elder Mountain community.
 
-Elder Mountain is a unique community on the outskirts of Marion County, on top of a mountain.
+Elder Mountain is a unique community on top of a mountain, and the department serves it in both Marion and Hamilton counties.
 
 The department is a tax-exempt 501(c)(3) nonprofit organization. About 20 volunteers serve as firefighters, emergency medical technicians (EMTs), medical first responders, and support staff, all either trained or in training.
 

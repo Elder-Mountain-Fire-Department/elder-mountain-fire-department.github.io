@@ -1,5 +1,31 @@
 [
   {
+    "file": "ladder-testing-1.jpg",
+    "caption": "Annual ground ladder testing to NFPA standards, November 2026",
+    "alt": "Ground ladders laid out beside the station for load testing, with a testing truck and a weighted box on a frame"
+  },
+  {
+    "file": "ladder-testing-2.jpg",
+    "caption": "Ladder load testing, November 2026",
+    "alt": "A 500 pound test weight hanging over a ground ladder supported on stands"
+  },
+  {
+    "file": "medical-training-2026-11.jpg",
+    "caption": "Medical training, November 2026",
+    "alt": "Volunteers practicing patient care on a member lying on the floor of the station beside a backboard"
+  },
+  {
+    "file": "station-training-2026-11.jpg",
+    "caption": "Training night at the station, November 2026",
+    "alt": "Volunteers gathered inside the station during evening training, lit by a work light"
+  },
+  {
+    "file": "engine-1-cab.jpg",
+    "caption": "Engine 1",
+    "alt": "Cab of Engine 1 with Elder Mountain Engine 1 lettering on the door",
+    "home": true
+  },
+  {
     "file": "engine-1-station.jpg",
     "caption": "New Engine 1",
     "alt": "Engine 1 parked outside the Elder Mountain fire station"
@@ -8,17 +34,6 @@
     "file": "lz-training-group.jpg",
     "caption": "Landing zone (LZ) training",
     "alt": "Volunteers standing in front of a LifeForce medical helicopter in a field"
-  },
-  {
-    "file": "lz-training-briefing.jpg",
-    "caption": "LZ training briefing",
-    "alt": "Volunteers gathered in a field during a landing zone briefing"
-  },
-  {
-    "file": "deck-gun.jpg",
-    "caption": "Deck gun",
-    "alt": "A firefighter operating the deck gun on top of the engine",
-    "home": true
   },
   {
     "file": "engine-1-pump-panel.jpg",
@@ -30,11 +45,6 @@
     "caption": "Wildland fire response",
     "alt": "Firefighters working at night in a wooded area lit by emergency lights",
     "home": true
-  },
-  {
-    "file": "wildland-fire-engine-night.jpg",
-    "caption": "Wildland fire response",
-    "alt": "Fire engine with lights on beside a fence at night"
   },
   {
     "file": "wildland-training.jpg",
