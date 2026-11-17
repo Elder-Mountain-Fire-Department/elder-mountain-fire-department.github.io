@@ -26,7 +26,7 @@ EMFD responds to fire, medical, rescue, and other emergencies in its response ar
 </div>
 <div>
 <dt>Brush 1 <span class="soon">Coming December 2026</span></dt>
-<dd>A Ford F-350 chassis with a U.S. Forest Service skid unit, for brush and wildland fires.</dd>
+<dd>A Ford F-350 chassis carrying a skid unit loaned to us at no cost by the Tennessee Division of Forestry (the unit itself is owned by the U.S. Forest Service). Brush 1 is for brush and wildland fires.</dd>
 </div>
 </dl>
 </div>
