@@ -8,10 +8,11 @@ permalink: /contact/
   <div class="contact-info">
     <h1>Join or contact us</h1>
     <p class="lede">Want to help your community? We are always accepting applications for firefighters and support members. Questions and information requests come here too.</p>
-    <p class="contact-911"><strong>For emergencies, dial 911.</strong> This form and our email are not monitored around the clock.</p>
+    <p class="contact-911"><strong>For emergencies, dial 911.</strong> Our department phone, this form and our email are not monitored around the clock.</p>
     <dl class="contact-facts">
       <div><dt>Station</dt><dd>{{ site.station.street }}<br>{{ site.station.city }}</dd></div>
       <div><dt>Mailing address</dt><dd>{{ site.mailing.street }}<br>{{ site.mailing.city }}</dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:{{ site.phoneTel }}">{{ site.phone }}</a></dd></div>
       <div><dt>Email</dt><dd><a href="mailto:{{ site.email }}">{{ site.email }}</a></dd></div>
     </dl>
   </div>
